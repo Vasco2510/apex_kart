@@ -3,7 +3,7 @@
 Plan por fases, agnóstico de herramientas. Cada paso tiene un ID, entregable verificable, dependencias y requisito de GPU.
 **Estado actual:** actualizar la columna `Estado` (`[ ]` pendiente · `[~]` en curso · `[x]` hecho) y la línea de abajo.
 
-> **Estás en:** F0 (ver tabla). Última actualización: 2026-10-30.
+> **Estás en:** semana 1. Hecho: entorno, motor, evaluación, pipeline de datos, entrenamiento de humo. Siguiente bloqueo humano: datos completos del Drive (F2.1) y reparto con el compañero. Ver "Registro de avance" al final. Última actualización: 2026-10-30.
 
 ## Leyenda
 
@@ -38,11 +38,11 @@ Tres carriles se pueden mover **a la vez** tras F0: **(a) motor + evaluación** 
 
 | ID | Paso | Entregable | Dep. | Paralelo con | GPU | Quién | Estado |
 |----|------|-----------|------|--------------|-----|-------|--------|
-| F0.1 | Repo en GitHub + colaborador | Repo privado creado, compañero invitado | — | F0.2, F0.4 | No | H+C | [ ] |
-| F0.2 | Entorno reproducible | Entorno Python 3.11 con `pip install -e .` y `doctor --engine` OK en tu máquina | — | F0.1, F0.4 | No | H | [ ] |
+| F0.1 | Repo en GitHub + colaborador | Repo privado creado, compañero invitado | — | F0.2, F0.4 | No | H+C | [~] |
+| F0.2 | Entorno reproducible | Entorno Python 3.11 con `pip install -e .` y `doctor --engine` OK en tu máquina | — | F0.1, F0.4 | No | H | [x] |
 | F0.3 | Decisión de cómputo | Entrenar en Colab con el plan Google AI Pro (200 compute units/mes, 5 TB Drive). Promo de 3 meses; luego sube de precio | — | F0.2 | No | H | [x] |
-| F0.4 | Aclarar `[COMPLETAR]` con el profesor | Criterio de evaluación, formato de entrega, tiempo/cómputo en inferencia confirmados en `docs/ENUNCIADO.md` | — | todo | No | H | [ ] |
-| F0.5 | Convenciones de trabajo | Estructura de carpetas, política de datos fuera de git, semillas, registro de experimentos | F0.1 | F0.2 | No | H+C | [ ] |
+| F0.4 | Aclarar `[COMPLETAR]` con el profesor | Criterio de evaluación, formato de entrega, tiempo/cómputo en inferencia confirmados en `docs/ENUNCIADO.md` | — | todo | No | H | [~] |
+| F0.5 | Convenciones de trabajo | Estructura de carpetas, política de datos fuera de git, semillas, registro de experimentos | F0.1 | F0.2 | No | H+C | [~] |
 
 **Hecho cuando:** ambos integrantes pueden clonar, instalar y correr `doctor` desde cero, y las dudas del enunciado están resueltas o registradas como supuestos.
 
@@ -50,10 +50,10 @@ Tres carriles se pueden mover **a la vez** tras F0: **(a) motor + evaluación** 
 
 | ID | Paso | Entregable | Dep. | Paralelo con | GPU | Quién | Estado |
 |----|------|-----------|------|--------------|-----|-------|--------|
-| F1.1 | Verificar motor y listar activos | Salida de `assets` guardada (ids reales de pistas/karts, difícultad válida 0–2) | F0.2 | F2.1 | No | H+C | [ ] |
-| F1.2 | Medir velocidad del simulador | Tabla: pasos/s, FPS con/sin ventana, coste de reset | F1.1 | F1.3 | No | C | [ ] |
-| F1.3 | Agente trivial de contrato | Agente que cumple el protocolo (`agent.json` + clase) y corre con `play` | F1.1 | F1.2 | No | C | [ ] |
-| F1.4 | Línea base sin aprendizaje | Resultados de agente constante/aleatorio y, si aplica, bots, en pistas fijas | F1.3 | F2.* | No | C | [ ] |
+| F1.1 | Verificar motor y listar activos | Salida de `assets` guardada (ids reales de pistas/karts, difícultad válida 0–2) | F0.2 | F2.1 | No | H+C | [x] |
+| F1.2 | Medir velocidad del simulador | Tabla: pasos/s, FPS con/sin ventana, coste de reset | F1.1 | F1.3 | No | C | [x] |
+| F1.3 | Agente trivial de contrato | Agente que cumple el protocolo (`agent.json` + clase) y corre con `play` | F1.1 | F1.2 | No | C | [x] |
+| F1.4 | Línea base sin aprendizaje | Resultados de agente constante/aleatorio y, si aplica, bots, en pistas fijas | F1.3 | F2.* | No | C | [~] |
 
 **Hecho cuando:** hay un número de referencia ("peor caso") reproducible y se sabe cuánto cuesta simular.
 
@@ -61,8 +61,8 @@ Tres carriles se pueden mover **a la vez** tras F0: **(a) motor + evaluación** 
 
 | ID | Paso | Entregable | Dep. | Paralelo con | GPU | Quién | Estado |
 |----|------|-----------|------|--------------|-----|-------|--------|
-| F2.1 | Obtener datos de todos los grupos | Carpeta de datos local/almacenamiento accesible a ambos | F0.1 | F1.* | No | H | [ ] |
-| F2.2 | Auditar y validar | Informe de `audit` (episodios válidos, cobertura por pista/kart, horas totales) | F2.1, F0.2 | F1.* | No | C | [ ] |
+| F2.1 | Obtener datos de todos los grupos | Carpeta de datos local/almacenamiento accesible a ambos | F0.1 | F1.* | No | H | [~] |
+| F2.2 | Auditar y validar | Informe de `audit` (episodios válidos, cobertura por pista/kart, horas totales) | F2.1, F0.2 | F1.* | No | C | [~] |
 | F2.3 | Recolección propia dirigida | Episodios nuevos que cubran huecos del informe (pistas raras, recuperación de errores, adelantamientos) | F2.2 | F3.* | No | H | [ ] |
 | F2.4 | Definir split | Lista fija train/val/test **por pista y/o episodio** (sin fuga entre episodios) | F2.2 | F2.3 | No | H+C | [ ] |
 
@@ -72,10 +72,10 @@ Tres carriles se pueden mover **a la vez** tras F0: **(a) motor + evaluación** 
 
 | ID | Paso | Entregable | Dep. | Paralelo con | GPU | Quién | Estado |
 |----|------|-----------|------|--------------|-----|-------|--------|
-| F3.1 | Explorar el contenido | Notas: distribución de acciones (steer, nitro, drift…), desbalance, calidad del conductor | F2.2 | F3.2 | No | C | [ ] |
-| F3.2 | Alinear RGB↔acción | Verificación de que RGB (30 Hz) y acción (60 Hz) quedan alineados; decisión de cómo agrupar acciones | F2.2 | F3.1 | No | C | [ ] |
-| F3.3 | Carga eficiente | Lector que alimente el entrenamiento sin cuello de botella (decodificar video una vez, caché) | F3.2, F2.4 | F4.* | No | C | [ ] |
-| F3.4 | Filtrado/curación | Criterio de qué episodios/fases se usan y con qué peso | F3.1 | F3.3 | No | H+C | [ ] |
+| F3.1 | Explorar el contenido | Notas: distribución de acciones (steer, nitro, drift…), desbalance, calidad del conductor | F2.2 | F3.2 | No | C | [~] |
+| F3.2 | Alinear RGB↔acción | Verificación de que RGB (30 Hz) y acción (60 Hz) quedan alineados; decisión de cómo agrupar acciones | F2.2 | F3.1 | No | C | [x] |
+| F3.3 | Carga eficiente | Lector que alimente el entrenamiento sin cuello de botella (decodificar video una vez, caché) | F3.2, F2.4 | F4.* | No | C | [x] |
+| F3.4 | Filtrado/curación | Criterio de qué episodios/fases se usan y con qué peso | F3.1 | F3.3 | No | H+C | [~] |
 
 **Hecho cuando:** un script entrega lotes (imagen, acción) deterministas con el split congelado.
 
@@ -83,9 +83,9 @@ Tres carriles se pueden mover **a la vez** tras F0: **(a) motor + evaluación** 
 
 | ID | Paso | Entregable | Dep. | Paralelo con | GPU | Quién | Estado |
 |----|------|-----------|------|--------------|-----|-------|--------|
-| F4.1 | Definir métricas | Qué se mide: vuelta completada, tiempo, posición, salidas de pista, rescates (alineado con F0.4) | F0.4 | F1.* | No | H+C | [ ] |
-| F4.2 | Conjunto de pistas/semillas de evaluación | Lista fija (incluye pistas **no** vistas en train) | F1.1, F2.4 | F4.1 | No | H+C | [ ] |
-| F4.3 | Arnés automático | Un comando corre N carreras y vuelca tabla de resultados comparable entre versiones | F1.3, F4.1, F4.2 | F3.* | No | C | [ ] |
+| F4.1 | Definir métricas | Qué se mide: vuelta completada, tiempo, posición, salidas de pista, rescates (alineado con F0.4) | F0.4 | F1.* | No | H+C | [~] |
+| F4.2 | Conjunto de pistas/semillas de evaluación | Lista fija (incluye pistas **no** vistas en train) | F1.1, F2.4 | F4.1 | No | H+C | [~] |
+| F4.3 | Arnés automático | Un comando corre N carreras y vuelca tabla de resultados comparable entre versiones | F1.3, F4.1, F4.2 | F3.* | No | C | [x] |
 | F4.4 | Prueba de ruido | Varianza entre semillas para saber qué diferencia es real | F4.3 | F5.* | No | C | [ ] |
 
 **Hecho cuando:** cualquier agente produce una tabla de métricas con el mismo procedimiento y se conoce su ruido.
@@ -94,7 +94,7 @@ Tres carriles se pueden mover **a la vez** tras F0: **(a) motor + evaluación** 
 
 | ID | Paso | Entregable | Dep. | Paralelo con | GPU | Quién | Estado |
 |----|------|-----------|------|--------------|-----|-------|--------|
-| F5A.1 | Prueba de humo del entrenamiento | Sobreajuste de un lote pequeño (confirma que el pipeline aprende) | F3.3 | F5B.1 | Opc | C | [ ] |
+| F5A.1 | Prueba de humo del entrenamiento | Sobreajuste de un lote pequeño (confirma que el pipeline aprende) | F3.3 | F5B.1 | Opc | C | [~] |
 | F5A.2 | Primer modelo completo | Checkpoint + curva de pérdida en validación | F5A.1 | F5B.* | **Sí** | H+C | [ ] |
 | F5A.3 | Evaluación en conducción real | Tabla de F4.3 para el modelo (pérdida baja ≠ conduce bien) | F5A.2, F4.3 | — | Opc | C | [ ] |
 
@@ -102,7 +102,7 @@ Tres carriles se pueden mover **a la vez** tras F0: **(a) motor + evaluación** 
 
 | ID | Paso | Entregable | Dep. | Paralelo con | GPU | Quién | Estado |
 |----|------|-----------|------|--------------|-----|-------|--------|
-| F5B.1 | Entorno + recompensa | Entorno Gymnasium con recompensa diseñada (progreso, sanciones) y prueba de que es consistente | F1.1, F1.2 | F5A.1 | No | C | [ ] |
+| F5B.1 | Entorno + recompensa | Entorno Gymnasium con recompensa diseñada (progreso, sanciones) y prueba de que es consistente | F1.1, F1.2 | F5A.1 | No | C | [x] |
 | F5B.2 | Profesor con estado privilegiado (opcional) | Política que conduce bien usando estado interno (solo para generar/etiquetar datos) | F5B.1 | F5A.* | Opc | C | [ ] |
 | F5B.3 | Estudiante desde RGB | Política de píxeles entrenada con RL o destilada del profesor | F5B.1, F4.3 (+ F5B.2 si hay profesor) | — | **Sí** | H+C | [ ] |
 
@@ -157,3 +157,22 @@ Los entrenamientos en Colab corren sin tu tiempo activo; tus 2 h/día son para p
 | 4 (días 22–30) | Cierre | F6.3, F7.*, F8.*; reservar los últimos 3 días solo para empaquetar y verificar |
 
 Reglas de recorte: si el día 14 no hay agente que complete vueltas, se descarta RL y se refuerza imitación + datos. Nada nuevo entra después del día 26.
+
+## Registro de avance
+
+| Fecha | Qué se hizo | Resultado / dónde |
+|-------|-------------|--------------------|
+| 2026-10-30 | F0.2 entorno Python 3.11 (venv fuera del repo: `C:\Users\Yuri Abel\venvs\apex`), `doctor --engine` OK | Se corrigió `roster.py` corrupto. 168 pasos/s a 60 Hz ≈ 2.8× tiempo real (RGB + estado, sin grabar) |
+| 2026-10-30 | F1.1 activos | `results/assets.json`: 21 pistas, 18 karts (coincide con lista del profesor) |
+| 2026-10-30 | F1.2/F1.3 velocidad y agente trivial | `agents/const_accel`; `play` con agente en el bucle ≈ 2.5× tiempo real, latencia ≈ 1 ms. `STKPixelEnv` 34–44 pasos de política/s (con otros procesos en paralelo) |
+| 2026-10-30 | F2.2/F3.1 auditoría y exploración de las 4 muestras | `results/audit_muestras.json`, `results/exploracion_muestras.md`: accel≈1 siempre, drift ~39 %, nitro 2.5 %, rescue 0 % |
+| 2026-10-30 | F3.3 preprocesado | `tools/preprocess.py` → `data/processed/` (160×90, stride 2): 2.2 GB/hora (casi igual que el crudo; usar `--down 8` para reducir) |
+| 2026-10-30 | F4.3 arnés | `tools/evaluate.py` + `configs/eval_set.json` (provisional) |
+| 2026-10-30 | F5A.1 humo del entrenamiento | `training/train_bc.py`, `agents/bc_cnn/` (modelo + agente) — ver resultado en F5A.1 |
+| 2026-10-30 | F5B.1 entorno + recompensa | `training/rewards.py`, `tools/check_env.py` |
+
+## Bloqueos que solo puede resolver el humano
+
+1. **F2.1** Datos completos del Drive del profesor: copiarlos a tu Drive (ver `docs/GUIA_HUMANO.md` §5) y procesarlos en Colab (`docs/COLAB.md`). Hasta entonces F2.2, F2.4, F3.4 y F4.2 quedan con las 4 muestras.
+2. **F0.1** Invitar al compañero al repo; **F0.2** que él repita la instalación (en Windows hay que usar Python 3.11: pygame no compila en 3.14).
+3. **F5A.2** Primer entrenamiento real: necesita GPU (Colab) y los datos procesados.

@@ -1,0 +1,7 @@
+{
+  "descripcion": "Conjunto fijo de evaluacion F4.2 (provisional hasta auditar los datos completos: incluir pistas NO vistas en entrenamiento).",
+  "tracks": ["lighthouse", "minigolf", "gran_paradiso_island", "hacienda", "snowtuxpeak", "zengarden"],
+  "seeds": [11, 22],
+  "base_config": "configs/evaluation.json",
+  "overrides": {"laps": 1, "num_karts": 8, "difficulty": 2, "max_seconds": 180, "kart": "tux"}
+}

@@ -1,0 +1,78 @@
+{
+  "valid": true,
+  "scope": "collection",
+  "root": "contexto\\muestras",
+  "episodes_found": 4,
+  "episodes_valid": 4,
+  "episodes_invalid": 0,
+  "total_hours": 0.13074074074074074,
+  "total_GiB": 0.4217409761622548,
+  "unique_effective_seeds": 4,
+  "human_slot_counts": {
+    "2": 1,
+    "6": 3
+  },
+  "action_coverage": {
+    "nonzero_steps": {
+      "steer": 18527,
+      "acceleration": 26991,
+      "brake": 145,
+      "nitro": 618,
+      "drift": 10481,
+      "fire": 189,
+      "rescue": 0
+    },
+    "button_rising_edges": {
+      "brake": 5,
+      "nitro": 18,
+      "drift": 116,
+      "fire": 28,
+      "rescue": 0
+    },
+    "missing_nonzero_actions": [
+      "rescue"
+    ],
+    "all_actions_observed": false
+  },
+  "warnings": [
+    "Acciones nunca observadas en TODO el conjunto: rescue"
+  ],
+  "episodes": [
+    {
+      "path": "contexto\\muestras\\df1818d3222849d495cb915e0456f689",
+      "valid": true,
+      "episode_id": "df1818d3222849d495cb915e0456f689",
+      "seconds": 181.88333333333333,
+      "MiB": 178.929,
+      "seed": 1792826069,
+      "human_slot": 2
+    },
+    {
+      "path": "contexto\\muestras\\e1279432c9f44b98b4919c74a724b8d9",
+      "valid": true,
+      "episode_id": "e1279432c9f44b98b4919c74a724b8d9",
+      "seconds": 99.88333333333334,
+      "MiB": 69.518,
+      "seed": 341212985,
+      "human_slot": 6
+    },
+    {
+      "path": "contexto\\muestras\\edc8b8e27fee4f2f8025be8da92719ec",
+      "valid": true,
+      "episode_id": "edc8b8e27fee4f2f8025be8da92719ec",
+      "seconds": 177.0,
+      "MiB": 172.286,
+      "seed": 95923357,
+      "human_slot": 6
+    },
+    {
+      "path": "contexto\\muestras\\f5c0e900c6004e64bad43b2dded01245",
+      "valid": true,
+      "episode_id": "f5c0e900c6004e64bad43b2dded01245",
+      "seconds": 11.9,
+      "MiB": 11.13,
+      "seed": 798973314,
+      "human_slot": 6
+    }
+  ]
+}

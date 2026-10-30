@@ -1,0 +1,6 @@
+{
+  "name": "bc_cnn",
+  "entry": "agent.py",
+  "class": "Agent",
+  "config": {"checkpoint": "weights/model.pt", "device": "auto", "threshold": 0.5}
+}

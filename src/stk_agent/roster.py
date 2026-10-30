@@ -1,4 +1,4 @@
-ñfrom __future__ import annotations
+from __future__ import annotations
 import random
 
 def select_roster(settings, participants, available):

@@ -1,0 +1,6 @@
+{
+  "name": "const_accel",
+  "entry": "agent.py",
+  "class": "Agent",
+  "config": {}
+}

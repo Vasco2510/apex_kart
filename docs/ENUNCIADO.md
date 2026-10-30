@@ -66,3 +66,9 @@ Declaración del profesor: "vale todo, toda tecnica toda estratgia o cheat con t
 
 - El profesor lista `difficulty` hasta 3, pero `RaceSettings` en `config.py` solo acepta 0, 1 o 2. **Decisión: manda el código disponible (0–2).**
 - Los identificadores reales de pistas y karts los devuelve `python -m stk_agent assets`; esa salida manda sobre las listas de arriba.
+## 7. Hallazgos al ejecutar el código (2026-10-30)
+
+- Los episodios de las muestras se grabaron con `difficulty: 3` (y 2) y librería 0.5.0, aunque `RaceSettings` actual solo acepta 0–2. `Episode`/`audit` los leen sin problema (usan el dict de meta, no `RaceSettings`). Para evaluar/entrenar en el simulador, usar 0–2.
+- `src/stk_agent/roster.py` tenía un carácter basura (`ñ`) al inicio que rompía el motor (`SyntaxError`); se restauró desde `MarioCar.zip`. Es el único archivo que difería del zip.
+- Los humanos de las 3 muestras con fase de carrera terminaron en posiciones 6–8 de 8 contra bots difficulty 3: los datos humanos no son expertos; conviene curarlos (F3.4).
+- Tamaño real de los datos: ≈3.2 GiB por hora de conducción cruda (mp4+h5); los episodios van de 12 s a 182 s (11–179 MiB).

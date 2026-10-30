@@ -1,0 +1,233 @@
+{
+  "group_id": "Trikitonitos",
+  "driver_id": "MelisaRivera",
+  "source": "human",
+  "engine": {
+    "distribution": "PySuperTuxKart2",
+    "distribution_version": "0.7.4",
+    "reference_commit": "dd70f6823f248ae1df2ce513839a9b2c8c940c39",
+    "native_version": "1.5",
+    "python": "3.13.7",
+    "platform": "Linux-6.17.0-41-generic-x86_64-with-glibc2.42",
+    "render": true,
+    "display": false,
+    "motionblur": false,
+    "mlaa": false,
+    "coordinates": "X right, Y up, Z forward; rotation read is world-to-kart [w,x,y,z]",
+    "item_availability": "item list is not a guaranteed available-pickup/event list",
+    "bootstrap_steps": 1,
+    "quality": "sd",
+    "bot_implementation": "STK_builtin_AI_explicit_PlayerConfig",
+    "on_screen_names": false
+  },
+  "observation_contract": "RGB_WITH_HUD_v1",
+  "training_data_contract": "RGB_ACTION_PRIVILEGED_STATE_v1",
+  "input_device": "keyboard",
+  "input_keymap": {
+    "keyboard": {
+      "steer_left": [
+        "left",
+        "a"
+      ],
+      "steer_right": [
+        "right",
+        "d"
+      ],
+      "acceleration": [
+        "up",
+        "w"
+      ],
+      "brake": [
+        "down",
+        "s"
+      ],
+      "fire": [
+        "space"
+      ],
+      "rescue": [
+        "r"
+      ],
+      "drift": [
+        "left shift",
+        "right shift"
+      ],
+      "nitro": [
+        "left ctrl",
+        "right ctrl"
+      ],
+      "steer_rate_per_second": 6.0
+    },
+    "gamepad": {
+      "steer_axis": 0,
+      "throttle_axis": null,
+      "throttle_axis_min": -1.0,
+      "throttle_axis_max": 1.0,
+      "acceleration_button": 0,
+      "brake_button": 1,
+      "fire_button": 2,
+      "rescue_button": 3,
+      "drift_button": 4,
+      "nitro_button": 5,
+      "deadzone": 0.12
+    }
+  },
+  "gamepad_mapping": null,
+  "keyboard_steer_rate_per_second": 6.0,
+  "audio_in_policy": false,
+  "human_slot": 6,
+  "effective_seed": 798973314,
+  "collection_randomization": {
+    "requested_seed": "random",
+    "effective_seed": 798973314,
+    "requested_player_slot": "random",
+    "effective_player_slot": 6
+  },
+  "roster": [
+    {
+      "slot": 0,
+      "participant": null,
+      "controller": "stk_builtin_ai",
+      "kart": "hexley",
+      "observed": false
+    },
+    {
+      "slot": 1,
+      "participant": null,
+      "controller": "stk_builtin_ai",
+      "kart": "wilber",
+      "observed": false
+    },
+    {
+      "slot": 2,
+      "participant": null,
+      "controller": "stk_builtin_ai",
+      "kart": "pidgin",
+      "observed": false
+    },
+    {
+      "slot": 3,
+      "participant": null,
+      "controller": "stk_builtin_ai",
+      "kart": "sara_the_wizard",
+      "observed": false
+    },
+    {
+      "slot": 4,
+      "participant": null,
+      "controller": "stk_builtin_ai",
+      "kart": "amanda",
+      "observed": false
+    },
+    {
+      "slot": 5,
+      "participant": null,
+      "controller": "stk_builtin_ai",
+      "kart": "nolok",
+      "observed": false
+    },
+    {
+      "slot": 6,
+      "participant": "human",
+      "controller": "external",
+      "kart": "konqi",
+      "observed": true
+    },
+    {
+      "slot": 7,
+      "participant": null,
+      "controller": "stk_builtin_ai",
+      "kart": "xue",
+      "observed": false
+    }
+  ],
+  "participants": [
+    {
+      "name": "human",
+      "slot": 6,
+      "kind": "external",
+      "observe": true,
+      "kart": null
+    }
+  ],
+  "schema_version": "3.0.0",
+  "library_version": "0.5.0",
+  "episode_id": "f5c0e900c6004e64bad43b2dded01245",
+  "created_utc": "2026-09-27T02:20:26.182376+00:00",
+  "settings": {
+    "track": "minigolf",
+    "kart": "random",
+    "bot_kart": "random",
+    "kart_pool": null,
+    "avoid_duplicate_karts": true,
+    "show_names": false,
+    "laps": 3,
+    "num_karts": 8,
+    "difficulty": 2,
+    "seed": 798973314,
+    "player_slot": 6,
+    "reverse": false,
+    "width": 640,
+    "height": 360,
+    "tick_hz": 60,
+    "policy_hz": 30,
+    "rgb_hz": 30,
+    "quality": "sd",
+    "overlay": true,
+    "max_seconds": 600.0
+  },
+  "participant": "human",
+  "action_names": [
+    "steer",
+    "acceleration",
+    "brake",
+    "nitro",
+    "drift",
+    "fire",
+    "rescue"
+  ],
+  "codec": "h264",
+  "rgb_lossless": false,
+  "data_contract": "RGB_ACTION_PRIVILEGED_STATE_v1",
+  "sampling": {
+    "api_tick_hz": 60,
+    "human_display_target_hz": 60,
+    "actions_hz": 60,
+    "state_hz": 60,
+    "rgb_nominal_hz": 30,
+    "policy_hz": 30,
+    "physics_hz_reference": 120,
+    "time_authority": "HDF5 frames/sim_time indexed by rgb/frame_id; not MP4 timestamps",
+    "final_rgb": "terminal state always saved; final interval may be shorter than 1/rgb_hz"
+  },
+  "rgb_file": "rgb.mp4",
+  "num_frames": 715,
+  "num_transitions": 714,
+  "num_state_frames": 715,
+  "num_rgb_frames": 358,
+  "num_visual_transitions": 357,
+  "result": {
+    "status": "user_abort",
+    "finished": false,
+    "native_position": 8,
+    "finish_time": 0.0,
+    "overall_distance": 79.75552368164062
+  },
+  "quality": {
+    "wall_seconds": 18.847555050000665,
+    "paused_wall_seconds": 0.06148842300171964,
+    "active_wall_seconds": 18.786066626998945,
+    "effective_steps_per_second": 38.00689171270446,
+    "realtime_factor": 0.633448195211741,
+    "pacer_overruns": 182,
+    "phase_frame_counts": {
+      "TRACK_INTRO_PHASE": 180,
+      "READY_PHASE": 61,
+      "SET_PHASE": 60,
+      "GO_PHASE": 60,
+      "MUSIC_PHASE": 353
+    },
+    "dropped_frames": 0,
+    "hud_and_camera_alignment": "must_be_checked_with_doctor_and_inspect"
+  },
+  "simulated_seconds": 11.9
+}

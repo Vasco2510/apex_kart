@@ -55,10 +55,14 @@ Declaración del profesor: "vale todo, toda tecnica toda estratgia o cheat con t
 - Criterio de evaluación (¿ranking con `league`? ¿informe? ¿ambos?): [COMPLETAR]
 - Formato de entrega (¿`agent.json` más checkpoint? ¿informe? ¿presentación?): No hay formato de entrega pero si deberiamos tener un agente o model olisto para que el profe l oejecute independientemente cuando requeira hacer competir a los agentes entrados por los alumnos. 
 - Restricciones de inferencia (CPU o GPU, tiempo por acción): no hay
+- Pistas de evaluación: se usarán pistas conocidas y también pistas nuevas que el profesor no ha publicado (podrían estar en internet; eventualmente se podrían usar para entrenar). **Hay que generalizar a pistas no vistas.**
+- Recursos/herramientas del agente: sin limitaciones (confirmado por el usuario). Intérprete y librerías: libres, pero el intérprete del manifest (`python`) debe tener `stk-agent` instalado.
+- Formato de entrega: no aclarado; supuesto de trabajo = carpeta con `agent.json` + clase + pesos, más exportación portable de los pesos para convertir sin reentrenar.
+- Plazo del proyecto final: ~30 días desde 2026-10-30, ~2 h/día del usuario.
 - Tamaño del grupo: 2 personas
 - ¿Se permite usar los datos de todos los grupos?: totalmmente si. De hecho es lo recomendado
 
 ## 6. Notas de consistencia (verificar contra el código)
 
-- El profesor lista `difficulty` hasta 3, pero `RaceSettings` en `config.py` solo acepta 0, 1 o 2. Verificar en la versión actual de la librería y la ino disponible de nuestra arpeta.
+- El profesor lista `difficulty` hasta 3, pero `RaceSettings` en `config.py` solo acepta 0, 1 o 2. **Decisión: manda el código disponible (0–2).**
 - Los identificadores reales de pistas y karts los devuelve `python -m stk_agent assets`; esa salida manda sobre las listas de arriba.

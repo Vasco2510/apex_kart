@@ -40,7 +40,7 @@ Tres carriles se pueden mover **a la vez** tras F0: **(a) motor + evaluación** 
 |----|------|-----------|------|--------------|-----|-------|--------|
 | F0.1 | Repo en GitHub + colaborador | Repo privado creado, compañero invitado | — | F0.2, F0.4 | No | H+C | [ ] |
 | F0.2 | Entorno reproducible | Entorno Python 3.11 con `pip install -e .` y `doctor --engine` OK en tu máquina | — | F0.1, F0.4 | No | H | [ ] |
-| F0.3 | Decisión de cómputo | Documento corto: dónde se entrena (GPU local / nube / cluster) y presupuesto de horas | — | F0.2 | No | H | [ ] |
+| F0.3 | Decisión de cómputo | Entrenar en Colab con el plan Google AI Pro (200 compute units/mes, 5 TB Drive). Promo de 3 meses; luego sube de precio | — | F0.2 | No | H | [x] |
 | F0.4 | Aclarar `[COMPLETAR]` con el profesor | Criterio de evaluación, formato de entrega, tiempo/cómputo en inferencia confirmados en `docs/ENUNCIADO.md` | — | todo | No | H | [ ] |
 | F0.5 | Convenciones de trabajo | Estructura de carpetas, política de datos fuera de git, semillas, registro de experimentos | F0.1 | F0.2 | No | H+C | [ ] |
 
@@ -122,7 +122,7 @@ Se repite F6 hasta agotar tiempo/presupuesto. Lo que no mejora la tabla de F4 no
 
 | ID | Paso | Entregable | Dep. | Paralelo con | GPU | Quién | Estado |
 |----|------|-----------|------|--------------|-----|-------|--------|
-| F7.1 | Agente autocontenido | Carpeta con `agent.json`, clase y pesos; carga relativa | F6 | F8.* | No | C | [ ] |
+| F7.1 | Agente autocontenido | Carpeta con `agent.json`, clase y pesos; carga relativa. Pesos también en formato portable para convertir sin reentrenar; el agente usa GPU si hay y CPU si no | F6 | F8.* | No | C | [ ] |
 | F7.2 | Prueba en entorno limpio | Clonar en otra máquina/entorno nuevo, instalar y correr `play`/`race` | F7.1 | F8.* | No | H | [ ] |
 | F7.3 | Medir latencia y robustez | Tiempo por acción en CPU y GPU, comportamiento ante timeout y pistas nuevas | F7.1 | F7.2 | No | C | [ ] |
 | F7.4 | Congelar versión | Etiqueta en git + dependencias fijadas (`freeze`) | F7.2, F7.3 | — | No | H+C | [ ] |
@@ -144,3 +144,16 @@ Se repite F6 hasta agotar tiempo/presupuesto. Lo que no mejora la tabla de F4 no
 ## Ruta crítica
 
 `F0.2 → F1.1 → F1.3 → F4.3 → F5A.3 → F6 → F7 → F8.2` y, en paralelo, `F2.1 → F2.2 → F2.4 → F3.3 → F5A.2`. Los puntos de unión son F4.3 (todo se mide con él) y F5A.3.
+
+## Calendario (≈30 días desde 2026-10-30, ≈2 h/día de trabajo humano ≈ 60 h)
+
+Los entrenamientos en Colab corren sin tu tiempo activo; tus 2 h/día son para preparar, lanzar, revisar y decidir.
+
+| Semana | Foco | Pasos |
+|--------|------|-------|
+| 1 (días 1–7) | Base y datos | F0.* completo, F1.*, F2.1–F2.2, F4.1–F4.3 |
+| 2 (días 8–14) | Primer modelo | F2.4, F3.*, F5A.1–F5A.3. **Corte día 14:** debe existir un agente que complete vueltas |
+| 3 (días 15–21) | Mejora | F6 (análisis de fallos, datos dirigidos F2.3, F4.4), F5B solo si el simulador es rápido y el agente base ya anda |
+| 4 (días 22–30) | Cierre | F6.3, F7.*, F8.*; reservar los últimos 3 días solo para empaquetar y verificar |
+
+Reglas de recorte: si el día 14 no hay agente que complete vueltas, se descarta RL y se refuerza imitación + datos. Nada nuevo entra después del día 26.

@@ -13,9 +13,9 @@ La sesión de `gh` no estaba iniciada, así que el repo **no está creado todav�
    Elige GitHub.com → HTTPS → "Login with a web browser".
 2. Crea el repo **privado** y súbelo (desde esta carpeta):
    ```bash
-   gh repo create dl-stk-agent --private --source=. --remote=origin --push
+   gh repo create apex_kart --private --source=. --remote=origin --push
    ```
-   Puedes cambiar el nombre. Déjalo privado: es trabajo del curso y el material base es del profesor.
+   Si el repo ya existe con otro nombre: `gh repo rename apex_kart` (mantiene el contenido y la URL antigua redirige). Déjalo privado: es trabajo del curso y el material base es del profesor.
 3. Invita a tu compañero: repo → Settings → Collaborators → Add people.
 4. Revisa en `git config user.name` y `user.email` que son los que quieres mostrar en los commits (tienes configurado `Vasco2510` como nombre).
 
@@ -44,7 +44,7 @@ No hay GPU NVIDIA detectada en esta máquina (`nvidia-smi` no existe aquí). Nec
 
 Elige con una regla: que se pueda **reanudar** un entrenamiento interrumpido y que los datos sean accesibles desde ahí.
 
-## 4. Aclarar el enunciado con el profesor (F0.4)
+## 4. Aclarar el enunciado con el profesor (F0.4) — mayormente resuelto, ver ENUNCIADO.md §5
 
 Pregunta (por Discord) y copia las respuestas a `docs/ENUNCIADO.md`:
 
@@ -59,8 +59,10 @@ Sin la respuesta 3 y 6 no conviene fijar arquitectura.
 
 ## 5. Datos (F2.1, F2.3)
 
-1. Descarga la carpeta compartida de Drive con los episodios de todos los grupos (ID en `ENUNCIADO.md`). Cuenta cuánto pesa antes de bajar todo; si es grande, empieza por una muestra.
-2. Decide **dónde viven los datos**: nunca dentro de git. Sugerencia: una carpeta fuera del repo o `data/` (ya está ignorado) y, para compartir con tu compañero, Drive.
+1. **No descargues todo.** Cada episodio pesa ~85 MB (rgb.mp4 ~65 MB + data.h5 ~19 MB) y hay cientos: decenas de GB. Tu disco libre ahora: C: ~12 GB, Z: ~7 GB. Baja solo 2–3 episodios de muestra para desarrollar en local.
+2. Averigua el tamaño real: en Drive, clic derecho en la carpeta `MarioKart` → "Información de la carpeta" / Detalles. Anota el total y el número de episodios.
+3. Estrategia: **datos crudos en la nube, trabajo local con muestras**. Los archivos "compartidos conmigo" no cuentan en tu cuota hasta que los copias. Para copiarlos a tu Drive sin pasar por tu PC, se usa `rclone` con copia en el servidor (Drive web no copia carpetas). Lo configuramos juntos cuando F2.1 esté en curso.
+4. Decide **dónde viven los datos**: nunca dentro de git. Local: `data/` (ya ignorado), solo muestras.
 3. Cuando yo te entregue el informe de auditoría (F2.2), graba episodios nuevos que cubran los huecos. Reglas del profesor: completar carreras, variar pistas y karts, incluir adelantamientos, nitro, drift, recuperación de errores.
 
 ## 6. Decisiones que conviene tomar con tu compañero

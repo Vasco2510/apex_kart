@@ -1,0 +1,64 @@
+# Enunciado y material del curso: Deep Learning (UTEC)
+
+Fuente: mensajes del profesor Victor Flores Benites (Discord), ordenados y transcritos.
+Los campos [COMPLETAR] faltan; no inventar su contenido.
+
+## 1. Instalación y verificación (Linux/Windows)
+
+```
+conda create -n stk python=3.11 -y
+conda activate stk
+python -m pip install -e .
+python -m stk_agent doctor --engine --config configs/test_collect.json
+```
+
+Material base: `MarioCar.zip` (librería `stk_agent`), ya descomprimido en la raíz del repo.
+
+## 2. Recolección de datos
+
+```
+python -m stk_agent collect --config configs/collect.json --keymap configs/keymap.yaml --group NOMBRE_GRUPO --driver NOMBRE_ALUMNO --out data/local
+```
+
+- La carrera se graba hasta que el jugador presiona `Esc` o se alcanza el tiempo máximo de seguridad.
+- Los controles se modifican en `configs/keymap.yaml`.
+- Cada ejecución genera un episodio nuevo dentro de `data/local/`.
+- Varias carreras consecutivas: agregar `--episodes N`.
+
+## 3. Configuración de partida (`configs/collect.json`)
+
+- `kart` (personaje): `random`, `adiumy`, `amanda`, `beastie`, `emule`, `gavroche`, `gnu`, `hexley`, `kiki`, `konqi`, `nolok`, `pidgin`, `puffy`, `sara_the_racer`, `sara_the_wizard`, `suzanne`, `tux`, `wilber`, `xue`
+- `track` (mapa): `abyss`, `black_forest`, `candela_city`, `cocoa_temple`, `cornfield_crossing`, `fortmagma`, `gran_paradiso_island`, `hacienda`, `lighthouse`, `mines`, `minigolf`, `olivermath`, `ravenbridge_mansion`, `sandtrack`, `scotland`, `snowmountain`, `snowtuxpeak`, `stk_enterprise`, `volcano_island`, `xr591`, `zengarden`
+- `difficulty` (bots): 0 = Novice, 1 = Intermediate, 2 = Expert, 3 = Best (según el profesor)
+- `bot_kart`: `"random"` para personajes aleatorios en los rivales
+
+## 4. Proyecto Parcial (cerrado)
+
+Fecha límite: 27 de setiembre, 11:59 pm.
+
+- Cada grupo debía recolectar al menos 1 hora de conducción con la librería.
+- Objetivo: un conjunto de demostraciones diverso y útil para entrenar modelos.
+- Usar distintos circuitos y, en lo posible, distintos personajes.
+- Conducir bien: completar las carreras y seguir la pista.
+- No repetir el mismo tipo de carrera.
+- Experimentar con la dinámica del juego: adelantar, competir con bots, usar objetos, nitro, drift, frenar, recuperarse de errores.
+- Son válidos errores, salidas de pista o choques ocasionales: también aportan ejemplos útiles.
+- Entrega: carpeta de Google Drive compartida (ID `1-XlHVsB2ntmou9OYiioy9fwpisnZPbTH`), en una subcarpeta con el nombre del grupo.
+
+Resultado: la carpeta contiene cientos de episodios de todos los grupos. Cada episodio contiene `meta.json`, `data.h5`, `rgb.mp4`, `track.npz`, `checksums.json`, `READY.json` (y `rgb.mp4.ffmpeg.log`).
+
+## 5. Proyecto final
+
+Declaración del profesor: "vale todo, toda tecnica toda estratgia o cheat con tal de cosneguir un mejor performance", sin restricciones de método.
+
+- Enunciado oficial: No tenemos enunciado oficial, pero el objetivo es entrenar un agente que conduzca bien en el juego. Se puede usar cualquier técnica de aprendizaje profundo, aprendizaje por refuerzo, o incluso heurísticas y trucos. Tenemos informacion en el readme sobre de que trata el proyecto. 
+- Criterio de evaluación (¿ranking con `league`? ¿informe? ¿ambos?): [COMPLETAR]
+- Formato de entrega (¿`agent.json` más checkpoint? ¿informe? ¿presentación?): No hay formato de entrega pero si deberiamos tener un agente o model olisto para que el profe l oejecute independientemente cuando requeira hacer competir a los agentes entrados por los alumnos. 
+- Restricciones de inferencia (CPU o GPU, tiempo por acción): no hay
+- Tamaño del grupo: 2 personas
+- ¿Se permite usar los datos de todos los grupos?: totalmmente si. De hecho es lo recomendado
+
+## 6. Notas de consistencia (verificar contra el código)
+
+- El profesor lista `difficulty` hasta 3, pero `RaceSettings` en `config.py` solo acepta 0, 1 o 2. Verificar en la versión actual de la librería y la ino disponible de nuestra arpeta.
+- Los identificadores reales de pistas y karts los devuelve `python -m stk_agent assets`; esa salida manda sobre las listas de arriba.

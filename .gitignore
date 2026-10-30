@@ -1,0 +1,23 @@
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+.venv/
+.env
+
+# Datos, resultados y pesos: no van a git
+data/
+runs/
+weights/
+*.h5
+*.mp4
+*.npz
+*.pt
+*.pth
+*.ckpt
+*.safetensors
+
+# Material original del curso (ya descomprimido en el repo)
+MarioCar.zip
+requirements.local.lock.txt

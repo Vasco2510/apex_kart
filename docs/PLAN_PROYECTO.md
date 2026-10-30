@@ -53,7 +53,7 @@ Tres carriles se pueden mover **a la vez** tras F0: **(a) motor + evaluación** 
 | F1.1 | Verificar motor y listar activos | Salida de `assets` guardada (ids reales de pistas/karts, difícultad válida 0–2) | F0.2 | F2.1 | No | H+C | [x] |
 | F1.2 | Medir velocidad del simulador | Tabla: pasos/s, FPS con/sin ventana, coste de reset | F1.1 | F1.3 | No | C | [x] |
 | F1.3 | Agente trivial de contrato | Agente que cumple el protocolo (`agent.json` + clase) y corre con `play` | F1.1 | F1.2 | No | C | [x] |
-| F1.4 | Línea base sin aprendizaje | Resultados de agente constante/aleatorio y, si aplica, bots, en pistas fijas | F1.3 | F2.* | No | C | [~] |
+| F1.4 | Línea base sin aprendizaje | Resultados de agente constante/aleatorio y, si aplica, bots, en pistas fijas | F1.3 | F2.* | No | C | [x] |
 
 **Hecho cuando:** hay un número de referencia ("peor caso") reproducible y se sabe cuánto cuesta simular.
 
@@ -94,7 +94,7 @@ Tres carriles se pueden mover **a la vez** tras F0: **(a) motor + evaluación** 
 
 | ID | Paso | Entregable | Dep. | Paralelo con | GPU | Quién | Estado |
 |----|------|-----------|------|--------------|-----|-------|--------|
-| F5A.1 | Prueba de humo del entrenamiento | Sobreajuste de un lote pequeño (confirma que el pipeline aprende) | F3.3 | F5B.1 | Opc | C | [~] |
+| F5A.1 | Prueba de humo del entrenamiento | Sobreajuste de un lote pequeño (confirma que el pipeline aprende) | F3.3 | F5B.1 | Opc | C | [x] |
 | F5A.2 | Primer modelo completo | Checkpoint + curva de pérdida en validación | F5A.1 | F5B.* | **Sí** | H+C | [ ] |
 | F5A.3 | Evaluación en conducción real | Tabla de F4.3 para el modelo (pérdida baja ≠ conduce bien) | F5A.2, F4.3 | — | Opc | C | [ ] |
 
@@ -168,7 +168,8 @@ Reglas de recorte: si el día 14 no hay agente que complete vueltas, se descarta
 | 2026-10-30 | F2.2/F3.1 auditoría y exploración de las 4 muestras | `results/audit_muestras.json`, `results/exploracion_muestras.md`: accel≈1 siempre, drift ~39 %, nitro 2.5 %, rescue 0 % |
 | 2026-10-30 | F3.3 preprocesado | `tools/preprocess.py` → `data/processed/` (160×90, stride 2): 2.2 GB/hora (casi igual que el crudo; usar `--down 8` para reducir) |
 | 2026-10-30 | F4.3 arnés | `tools/evaluate.py` + `configs/eval_set.json` (provisional) |
-| 2026-10-30 | F5A.1 humo del entrenamiento | `training/train_bc.py`, `agents/bc_cnn/` (modelo + agente) — ver resultado en F5A.1 |
+| 2026-10-30 | F5A.1 humo del entrenamiento | `training/train_bc.py`, `agents/bc_cnn/`: pérdida 1.22→1.06 en 6 épocas (CPU, 4 episodios ≈ 0.13 h). El agente carga el checkpoint y corre en `play` (23 ms/acción en CPU con carga), pero conduce mal (17 m en 60 s): esperable con tan pocos datos; confirma que el pipeline funciona, no que el modelo sirva |
+| 2026-10-30 | F1.4 línea base | `results/baseline_const_accel/`: acelerar recto = 0 % de carreras terminadas, posición 8/8, 223 m de media en 12 carreras (6 pistas × 2 semillas). Resultado idéntico entre semillas: el simulador es determinista con una política determinista |
 | 2026-10-30 | F5B.1 entorno + recompensa | `training/rewards.py`, `tools/check_env.py` |
 
 ## Bloqueos que solo puede resolver el humano

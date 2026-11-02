@@ -24,3 +24,4 @@ requirements.local.lock.txt
 
 runs_*.log
 nohup.out
+rclone_*.log

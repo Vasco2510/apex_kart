@@ -10,7 +10,7 @@ Plazo: ~30 días desde 2026-10-30, ~2 h/día.
 ## Dónde estoy
 
 **Semana 1 · día 4.** Listo: entorno, motor, línea base, preprocesado, evaluación, prueba de humo del entrenamiento.
-**Bloqueo (H):** copiar los datos del Drive del profesor a tu Drive (F2.1). Detalle en `docs/AVANCE.md`.
+**En curso:** copia completa de los datos a tu Drive (F2.1, ~2 h, corre sola). Auditoría hecha (928 episodios, 41 h) y subconjunto v1 de 207 episodios listo. Siguiente: preprocesar el subconjunto en Colab.
 
 ## Mapa
 
@@ -59,7 +59,7 @@ graph LR
 | | Paso | Entregable | Depende | Quién |
 |---|---|---|---|---|
 | 🔄 F2.1 | Datos de todos los grupos | Copia en tu Drive (hoy: 4 muestras) | F0.1 | **H** |
-| 🔄 F2.2 | Auditar | Informe de cobertura por pista y kart | F2.1 | C |
+| ✅ F2.2 | Auditar | `results/audit_dataset.md` | F2.1 | C |
 | ⬜ F2.3 | Grabar datos propios | Episodios que cubran los huecos | F2.2 | H |
 | ⬜ F2.4 | Congelar split | Lista train/val/test por pista | F2.2 | H+C |
 

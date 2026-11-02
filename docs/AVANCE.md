@@ -16,6 +16,9 @@ Bitácora de lo hecho (más reciente al final) y de lo que solo puede resolver u
 | 2026-10-30 | F1.4 línea base | `results/baseline_const_accel/`: acelerar recto = 0 % de carreras terminadas, posición 8/8, 223 m de media en 12 carreras (6 pistas × 2 semillas). Resultado idéntico entre semillas: el simulador es determinista con una política determinista |
 | 2026-10-30 | F5B.1 entorno + recompensa | `training/rewards.py`, `tools/check_env.py` |
 | 2026-11-02 | F2.1 tamaño real del Drive del profesor (`rclone size`) | 24 carpetas de grupos, 6541 archivos, 123.5 GiB (~930 episodios, ~38 h de conducción). La carpeta es pública y la cuenta Gmail de pago la ve con `root_folder_id`; copia a `UTEC/DEEP/MarioKart_copia` en curso |
+| 2026-11-02 | F2.2 auditoría completa por metadatos | 928 episodios válidos, 41.2 h, 24 grupos. `results/audit_dataset.md`, `results/episodios.csv`. 7 grupos anidan sus episodios una carpeta más adentro (176 episodios): el primer informe los contó como ~70 «grupos» falsos; corregido en `tools/audit_meta.py` |
+| 2026-11-02 | F3.4 subconjunto v1 | `tools/make_subset.py` → `results/subset_v1.txt`: 207 episodios (10.1 h), podio, dificultad ≥2, máx. 20 por pista |
+| 2026-11-02 | F2.1 copia completa lanzada | `rclone copy` servidor a servidor hacia `UTEC/DEEP/MarioKart_copia`; log `rclone_copia_full.log` (fuera de git) |
 
 ## Bloqueos que solo puede resolver el humano
 

@@ -10,12 +10,14 @@ from pathlib import Path
 
 def load(root):
     rows = []
-    for p in sorted(Path(root).rglob("meta.json")):
+    root = Path(root)
+    for p in sorted(root.rglob("meta.json")):
         ready = (p.parent / "READY.json").exists()
+        rel = p.parent.relative_to(root)  # grupo/[subcarpeta/]episodio: algunos grupos anidan un nivel mas
         m = json.loads(p.read_text(encoding="utf-8"))
         s, r = m["settings"], m.get("result") or {}
         rows.append({
-            "group": p.parent.parent.name, "episode": p.parent.name, "ready": ready,
+            "group": rel.parts[0], "episode": rel.as_posix(), "ready": ready,
             "track": s["track"], "difficulty": s["difficulty"], "laps": s.get("laps"), "num_karts": s.get("num_karts"),
             "reverse": s.get("reverse"), "seconds": m.get("simulated_seconds") or m.get("num_transitions", 0) / s.get("tick_hz", 60), "device": m.get("input_device"),
             "status": r.get("status"), "finished": bool(r.get("finished")),

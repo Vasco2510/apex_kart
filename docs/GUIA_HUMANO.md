@@ -61,7 +61,16 @@ Sin la respuesta 3 y 6 no conviene fijar arquitectura.
 
 1. **No descargues todo.** Cada episodio pesa ~85 MB (rgb.mp4 ~65 MB + data.h5 ~19 MB) y hay cientos: decenas de GB. Tu disco libre ahora: C: ~12 GB, Z: ~7 GB. Baja solo 2–3 episodios de muestra para desarrollar en local.
 2. Averigua el tamaño real: en Drive, clic derecho en la carpeta `MarioKart` → "Información de la carpeta" / Detalles. Anota el total y el número de episodios.
-3. Estrategia: **datos crudos en la nube, trabajo local con muestras**. Los archivos "compartidos conmigo" no cuentan en tu cuota hasta que los copias. Para copiarlos a tu Drive sin pasar por tu PC, se usa `rclone` con copia en el servidor (Drive web no copia carpetas). Lo configuramos juntos cuando F2.1 esté en curso.
+3. Estrategia: **datos crudos en la nube, trabajo local con muestras**. Los archivos "compartidos conmigo" no cuentan en tu cuota hasta que los copias.
+   - **Acceso directo (lo que ya tienes en `Mi unidad/UTEC/DEEP/MarioKart`):** sirve para explorar y para probar en Colab, pero no es una copia: si el dueño quita el acceso o mueve carpetas, desaparece, y Drive limita las lecturas masivas de archivos ajenos ("demasiados usuarios han visto o descargado este archivo"). Verifícalo con la celda de `docs/COLAB.md` §0 antes de fiarte.
+   - **Copia real a tu Drive (recomendado), sin pasar por tu PC:** `rclone` copia de servidor a servidor. Primero activa el plan de 5 TB (con el gratuito de 15 GB no cabe). Pasos:
+     1. `winget install Rclone.Rclone` y reabre la terminal.
+     2. `rclone config` → `n` (nuevo) → nombre `gdrive` → tipo `drive` → deja client_id/secret vacíos → scope `1` (acceso total) → el resto por defecto → "Use web browser" = `y` e inicia sesión con tu cuenta UTEC.
+     3. Comprueba que ve la carpeta compartida: `rclone lsd "gdrive,shared_with_me=true:"` (debe aparecer `MarioKart`).
+     4. Prueba con un grupo: `rclone copy "gdrive,shared_with_me=true:MarioKart/piedad_con_los_de_elmt" "gdrive:UTEC/DEEP/MarioKart_copia/piedad_con_los_de_elmt" -P --transfers 8`
+     5. Si funciona, copia todo: `rclone copy "gdrive,shared_with_me=true:MarioKart" "gdrive:UTEC/DEEP/MarioKart_copia" -P --transfers 8` (Drive limita ~750 GB/día de copia).
+     6. Comparte `MarioKart_copia` con tu compañero (permiso de lector) y que él cree un acceso directo; así no se duplica el almacenamiento.
+   - Si prefieres no usar `rclone`, la alternativa es copiar dentro de Colab con `cp -r` desde el montaje de Drive (más lento y se corta si se desconecta la sesión).
 4. Decide **dónde viven los datos**: nunca dentro de git. Local: `data/` (ya ignorado), solo muestras.
 3. Cuando yo te entregue el informe de auditoría (F2.2), graba episodios nuevos que cubran los huecos. Reglas del profesor: completar carreras, variar pistas y karts, incluir adelantamientos, nitro, drift, recuperación de errores.
 

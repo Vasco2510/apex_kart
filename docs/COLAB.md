@@ -6,6 +6,18 @@ Solo lo necesitas cuando tengas los datos del Drive procesados. Todo lo anterior
 1. Colab → Runtime → Change runtime type → GPU (T4 o la que tenga tu plan). Mira el costo en compute units por hora.
 2. Código: el repo es privado. Opciones: (a) crear un *fine-grained token* de GitHub con permiso de lectura solo a `apex_kart` y clonar con `git clone https://<usuario>:<token>@github.com/Vasco2510/apex_kart.git` (no pegues el token en celdas que compartas); (b) subir un zip del repo a Drive y descomprimirlo.
 
+## 0.5 Verificar que Colab ve los datos (acceso directo o copia)
+Con Drive montado, esta celda cuenta episodios y tamaño; cámbiala por tu ruta (`/content/drive/MyDrive/UTEC/DEEP/MarioKart`). Si da 0 episodios o errores de permiso, el acceso directo no sirve y hay que hacer la copia real (`docs/GUIA_HUMANO.md` §5).
+```python
+import os, glob
+root = '/content/drive/MyDrive/UTEC/DEEP/MarioKart'
+ready = glob.glob(root + '/*/*/READY.json')
+print('episodios con READY.json:', len(ready))
+tot = sum(os.path.getsize(os.path.join(os.path.dirname(r), f)) for r in ready[:20]
+          for f in os.listdir(os.path.dirname(r)) if os.path.isfile(os.path.join(os.path.dirname(r), f)))
+print('tamano medio por episodio (MB):', tot / max(1, min(20, len(ready))) / 1e6)
+```
+
 ## 1. Celdas
 ```python
 from google.colab import drive

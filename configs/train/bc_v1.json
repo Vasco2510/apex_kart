@@ -1,0 +1,14 @@
+{
+  "descripcion": "Clonacion de comportamiento v1: subconjunto v1 (podio), validacion en 3 pistas NO vistas en entrenamiento.",
+  "data": "data/processed_v1",
+  "out": "runs/bc_v1",
+  "frames": 3,
+  "epochs": 12,
+  "batch": 256,
+  "lr": 0.001,
+  "workers": 2,
+  "samples_per_epoch": 150000,
+  "val_tracks": ["scotland", "snowmountain", "candela_city"],
+  "augment": true,
+  "amp": true
+}

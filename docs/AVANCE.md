@@ -19,9 +19,12 @@ Bitácora de lo hecho (más reciente al final) y de lo que solo puede resolver u
 | 2026-11-02 | F2.2 auditoría completa por metadatos | 928 episodios válidos, 41.2 h, 24 grupos. `results/audit_dataset.md`, `results/episodios.csv`. 7 grupos anidan sus episodios una carpeta más adentro (176 episodios): el primer informe los contó como ~70 «grupos» falsos; corregido en `tools/audit_meta.py` |
 | 2026-11-02 | F3.4 subconjunto v1 | `tools/make_subset.py` → `results/subset_v1.txt`: 207 episodios (10.1 h), podio, dificultad ≥2, máx. 20 por pista |
 | 2026-11-02 | F2.1 copia completa lanzada | `rclone copy` servidor a servidor hacia `UTEC/DEEP/MarioKart_copia`; log `rclone_copia_full.log` (fuera de git) |
+| 2026-11-06 | F2.1 copia completa verificada | `MarioKart_copia`: 6539 objetos, 123.514 GiB. Los 207 episodios del subconjunto existen en la copia |
+| 2026-11-06 | F3.3 preprocesado v2 | `tools/preprocess.py` con ffmpeg: ~3× más rápido, diferencia ≤1 nivel de color con el método anterior; reanudable; acepta `--list`. Arregla nombres con `＞` (ancho completo en Windows) y con espacio inicial |
+| 2026-11-06 | F5A.2 preparación | `training/train_bc.py` (AMP, aumento de brillo, validación en pistas no vistas, reanuda sola, guarda mejor modelo), `configs/train/bc_v1.json`, `colab/01_preprocesar.ipynb`, `colab/02_entrenar.ipynb`, `tools/apex.py` (sync/status/pull/eval) |
 
 ## Bloqueos que solo puede resolver el humano
 
-1. **F2.1** Datos completos del Drive del profesor: copiarlos a tu Drive (ver `docs/GUIA_HUMANO.md` §5) y procesarlos en Colab (`docs/COLAB.md`). Hasta entonces F2.2, F2.4, F3.4 y F4.2 quedan con las 4 muestras.
-2. **F0.1** Invitar al compañero al repo; **F0.2** que él repita la instalación (en Windows hay que usar Python 3.11: pygame no compila en 3.14).
-3. **F5A.2** Primer entrenamiento real: necesita GPU (Colab) y los datos procesados.
+1. **F5A.2** Ejecutar los dos notebooks de `colab/` (pasos en `docs/COLAB.md`).
+2. **F0.1** Invitar al compañero al repo; **F0.2** que él repita la instalación (Python 3.11).
+3. **F0.4** Preguntar al profesor el criterio de nota y el formato de entrega.

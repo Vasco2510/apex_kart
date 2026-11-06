@@ -9,8 +9,8 @@ Plazo: ~30 días desde 2026-10-30, ~2 h/día.
 
 ## Dónde estoy
 
-**Semana 1 · día 4.** Listo: entorno, motor, línea base, preprocesado, evaluación, prueba de humo del entrenamiento.
-**En curso:** copia completa de los datos a tu Drive (F2.1, ~2 h, corre sola). Auditoría hecha (928 episodios, 41 h) y subconjunto v1 de 207 episodios listo. Siguiente: preprocesar el subconjunto en Colab.
+**Semana 2 · día 8.** Listo: datos copiados y auditados, subconjunto v1, preprocesado rápido, entrenamiento reanudable, notebooks de Colab.
+**Siguiente (H):** ejecutar `colab/01_preprocesar.ipynb` y luego `colab/02_entrenar.ipynb`. Guía en `docs/COLAB.md`.
 
 ## Mapa
 
@@ -58,10 +58,10 @@ graph LR
 
 | | Paso | Entregable | Depende | Quién |
 |---|---|---|---|---|
-| 🔄 F2.1 | Datos de todos los grupos | Copia en tu Drive (hoy: 4 muestras) | F0.1 | **H** |
-| ✅ F2.2 | Auditar | `results/audit_dataset.md` | F2.1 | C |
+| ✅ F2.1 | Datos de todos los grupos | Copia en tu Drive: 928 episodios, 123.5 GiB | F0.1 | **H** |
+| ✅ F2.2 | Auditar | `results/audit_dataset.md` (41 h, 24 grupos) | F2.1 | C |
 | ⬜ F2.3 | Grabar datos propios | Episodios que cubran los huecos | F2.2 | H |
-| ⬜ F2.4 | Congelar split | Lista train/val/test por pista | F2.2 | H+C |
+| 🔄 F2.4 | Congelar split | Validación en pistas no vistas: `configs/train/bc_v1.json` | F2.2 | H+C |
 
 ## F3 · Pipeline de datos (sin GPU)
 
@@ -70,7 +70,7 @@ graph LR
 | 🔄 F3.1 | Explorar | `results/exploracion_muestras.md` | F2.2 | C |
 | ✅ F3.2 | Alinear imagen y acción | Verificado en las muestras | F2.2 | C |
 | ✅ F3.3 | Formato compacto | `tools/preprocess.py` | F3.2 | C |
-| 🔄 F3.4 | Curar datos | Filtrar por resultado: los humanos quedaron 6º–8º | F3.1 | H+C |
+| ✅ F3.4 | Curar datos | `results/subset_v1.txt`: 207 episodios, podio, ≤20 por pista | F3.1 | H+C |
 
 ## F4 · Evaluación (sin GPU)
 
@@ -86,7 +86,7 @@ graph LR
 | | Paso | Entregable | Depende | GPU | Quién |
 |---|---|---|---|---|---|
 | ✅ F5A.1 | Prueba de humo | Entrena y el agente corre | F3.3 | Opc | C |
-| ⬜ F5A.2 | Primer modelo real | Checkpoint + curva en validación | F5A.1, F2.4 | **Sí** | H+C |
+| 🔄 F5A.2 | Primer modelo real | Notebooks listos en `colab/`; **falta ejecutarlos (H)** | F5A.1, F2.4 | **Sí** | H+C |
 | ⬜ F5A.3 | Medir conduciendo | Tabla del arnés | F5A.2, F4.3 | Opc | C |
 
 ## F5B · Refuerzo

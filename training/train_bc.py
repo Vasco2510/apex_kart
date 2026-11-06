@@ -25,7 +25,7 @@ from model import Net  # noqa: E402
 
 TRAIN_PHASES = ("GO_PHASE", "MUSIC_PHASE", "RACE_PHASE")
 DEFAULTS = dict(data=None, out=None, frames=3, epochs=10, batch=128, lr=1e-3, wd=1e-4, workers=2,
-                val_tracks=[], samples_per_epoch=0, max_minutes=0, seed=0, device="auto", amp=True,
+                val_tracks=[], samples_per_epoch=0, max_minutes=0.0, seed=0, device="auto", amp=True,
                 augment=True, w_steer=1.0, w_accel=0.3, w_brake=1.0, w_nitro=1.0, w_drift=1.0, w_fire=1.0)
 
 

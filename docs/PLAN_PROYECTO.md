@@ -10,7 +10,7 @@ Plazo: ~30 días desde 2026-10-30, ~2 h/día.
 ## Dónde estoy
 
 **Semana 2 · día 8.** Listo: datos copiados y auditados, subconjunto v1, preprocesado rápido, entrenamiento reanudable, notebooks de Colab.
-**Siguiente (H):** ejecutar `colab/01_preprocesar.ipynb` y luego `colab/02_entrenar.ipynb`. Guía en `docs/COLAB.md`.
+**Siguiente (H):** ejecutar `colab/entrenar.ipynb` (un solo notebook, GPU, *Ejecutar todo*). Guía en `docs/COLAB.md`.
 
 ## Mapa
 
@@ -86,7 +86,7 @@ graph LR
 | | Paso | Entregable | Depende | GPU | Quién |
 |---|---|---|---|---|---|
 | ✅ F5A.1 | Prueba de humo | Entrena y el agente corre | F3.3 | Opc | C |
-| 🔄 F5A.2 | Primer modelo real | Notebooks listos en `colab/`; **falta ejecutarlos (H)** | F5A.1, F2.4 | **Sí** | H+C |
+| 🔄 F5A.2 | Primer modelo real | Notebook listo: `colab/entrenar.ipynb`; **falta ejecutarlo (H)** | F5A.1, F2.4 | **Sí** | H+C |
 | ⬜ F5A.3 | Medir conduciendo | Tabla del arnés | F5A.2, F4.3 | Opc | C |
 
 ## F5B · Refuerzo

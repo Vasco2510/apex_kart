@@ -1,41 +1,47 @@
 # Entrenar en Colab
 
-Todo el flujo usa tu cuenta **Gmail con el plan** (la que tiene la copia de datos en `UTEC/DEEP/MarioKart_copia`).
+Todo usa tu cuenta **Gmail con el plan** (la que tiene la copia de datos en `UTEC/DEEP/MarioKart_copia`).
+El notebook solo llama a `training/pipeline.py`; la lógica vive en el repo.
+
+## Flujo (3 pasos)
+
+1. **PC:** subir el código a Drive.
+   ```bash
+   python tools/apex.py sync
+   ```
+2. **Colab:** abrir `colab/entrenar.ipynb`, runtime **GPU (T4)**, *Ejecutar todo*. Hace solo, en orden:
+   preprocesar (si falta) → copiar datos al disco local → prueba de humo → entrenar.
+   Todo es reanudable: si se corta, vuelve a ejecutar.
+3. **PC:** traer y evaluar el modelo.
+   ```bash
+   python tools/apex.py status        # avance de las corridas
+   python tools/apex.py pull bc_v1    # baja el modelo a agents/bc_cnn/weights/
+   python tools/apex.py eval bc_v1    # evalúa en el simulador (corre en tu PC)
+   ```
+
+Abrir el notebook: colab.research.google.com → Archivo → Subir cuaderno, o desde VS Code con la extensión de Colab.
+
+## Ajustes (celda 1 del notebook)
+
+| Variable | Para qué |
+|---|---|
+| `PRESET` | Qué configuración usar: `configs/train/<preset>.json` (hoy `v1`) |
+| `STAGES` | `preprocess,fetch,smoke,train`. Con solo `preprocess` y runtime CPU no gastas GPU |
+| `EXTRA` | Parámetros extra de entrenamiento, p. ej. `--epochs 20 --batch 128` |
 
 ## Dónde vive cada cosa
 
 | Qué | Dónde |
 |---|---|
-| Código (fuente de verdad) | GitHub `apex_kart` + tu PC |
-| Código para Colab | Drive `UTEC/DEEP/apex_kart_code` (lo sube `tools/apex.py sync`) |
-| Datos crudos del profesor | Drive `UTEC/DEEP/MarioKart_copia` (123 GiB, solo lectura) |
-| Datos preprocesados | Drive `UTEC/DEEP/apex_kart_processed/v1` (~22 GB) |
-| Corridas (checkpoints, logs) | Drive `UTEC/DEEP/apex_kart_runs/<nombre>` |
-
-## Flujo (3 pasos)
-
-1. **En tu PC:** subir el código.
-   ```bash
-   python tools/apex.py sync
-   ```
-2. **Colab, runtime CPU:** abrir `colab/01_preprocesar.ipynb` y ejecutar todas las celdas. Se hace una vez por subconjunto (~20–40 min, sin gastar GPU).
-3. **Colab, runtime GPU (T4):** abrir `colab/02_entrenar.ipynb` y ejecutar todas las celdas. Los checkpoints se guardan en Drive cada época; si se corta, vuelve a ejecutar y reanuda sola.
-
-Luego, en tu PC:
-```bash
-python tools/apex.py status        # ver avance de las corridas
-python tools/apex.py pull bc_v1    # bajar el modelo a agents/bc_cnn/weights/
-python tools/apex.py eval bc_v1    # evaluarlo en el simulador (el simulador corre en tu PC, no en Colab)
-```
-
-## Cómo abrir los notebooks
-
-- **Navegador:** colab.research.google.com → Archivo → Subir cuaderno → elegir el `.ipynb` de la carpeta `colab/`.
-- **Desde VS Code:** si tienes la extensión de Colab, abre el `.ipynb` y elige el kernel de Colab. Si no, usa el navegador.
+| Código | GitHub `apex_kart` y tu PC; copia para Colab en Drive `UTEC/DEEP/apex_kart_code` |
+| Datos crudos (123 GiB) | Drive `UTEC/DEEP/MarioKart_copia` (solo lectura) |
+| Datos preprocesados (~22 GB) | Drive `UTEC/DEEP/apex_kart_processed/v1` |
+| Corridas (checkpoints, log) | Drive `UTEC/DEEP/apex_kart_runs/<run>` |
 
 ## Si algo falla
 
-- *"Falta el codigo en Drive"*: ejecuta `python tools/apex.py sync` en tu PC.
-- *Se desconectó Colab*: vuelve a ejecutar las celdas de preparación y la de entrenar.
-- *Sin memoria o disco*: baja `batch` o `samples_per_epoch` en `configs/train/bc_v1.json` y sincroniza de nuevo.
-- Los notebooks se generan con `python tools/make_notebooks.py`; edita ese script, no el `.ipynb`.
+- *"Falta el codigo en Drive"*: `python tools/apex.py sync` en tu PC.
+- *"SIN GPU"*: Entorno de ejecución → Cambiar tipo → GPU.
+- *Se cortó Colab*: vuelve a ejecutar todo; salta lo hecho y reanuda el entrenamiento.
+- *Poca memoria o disco*: baja `batch` o `samples_per_epoch` en el preset y vuelve a ejecutar `sync`.
+- El `.ipynb` se genera con `python tools/make_notebooks.py`; edita ese script, no el notebook.

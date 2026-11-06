@@ -49,9 +49,9 @@ Entry: `cli.py` (argparse subcommands, lazy imports per command) → modules bel
 
 ## Project workflow (apex_kart)
 
-Own code lives beside the course library: `agents/` (deliverable agents: `bc_cnn` = behaviour cloning, `const_accel` = baseline), `training/` (`train_bc.py`, `rewards.py`), `tools/` (preprocess, evaluate, audit, Drive helpers), `configs/train/`, `colab/` (generated notebooks), `results/` (small tracked outputs), `docs/` (`PLAN_PROYECTO.md` = status per step, `AVANCE.md` = log, `COLAB.md` = how to train). Heavy stuff (`data/`, `runs/`, weights) is git-ignored.
+Own code lives beside the course library: `agents/` (deliverable agents: `bc_cnn` = behaviour cloning, `const_accel` = baseline), `training/` (`train_bc.py`, `rewards.py`), `tools/` (preprocess, evaluate, audit, Drive helpers), `configs/train/`, `colab/` (generated notebook), `results/` (small tracked outputs), `docs/` (`PLAN_PROYECTO.md` = status per step, `AVANCE.md` = log, `COLAB.md` = how to train). Heavy stuff (`data/`, `runs/`, weights) is git-ignored.
 
 - Python for the repo: venv `C:\Users\Yuri Abel\venvs\apex` (3.11; pygame does not build on 3.14). rclone remote `gmail` = the paid Google account; the Drive layout is documented in `tools/apex.py`.
-- Cycle: `python tools/apex.py sync` -> run `colab/01_preprocesar.ipynb` (CPU) and `colab/02_entrenar.ipynb` (GPU) -> `python tools/apex.py pull <run>` -> `python tools/apex.py eval <run>`.
+- Cycle: `python tools/apex.py sync` -> run `colab/entrenar.ipynb` (one notebook; all logic is in `training/pipeline.py`, presets in `configs/train/<preset>.json`) -> `python tools/apex.py pull <run>` -> `python tools/apex.py eval <run>`.
 - Preprocessed episodes: `frames.npy` (160x90, stride 2) + `labels.npz` + `info.json`; subset lists are `results/subset_*.txt` (paths may contain fullwidth characters; `tools/preprocess.py` normalises them).
 - Update `docs/PLAN_PROYECTO.md` statuses and `docs/AVANCE.md` after each step. Commits: no Claude co-author trailer (user preference).

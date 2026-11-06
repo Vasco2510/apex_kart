@@ -21,10 +21,10 @@ Bitácora de lo hecho (más reciente al final) y de lo que solo puede resolver u
 | 2026-11-02 | F2.1 copia completa lanzada | `rclone copy` servidor a servidor hacia `UTEC/DEEP/MarioKart_copia`; log `rclone_copia_full.log` (fuera de git) |
 | 2026-11-06 | F2.1 copia completa verificada | `MarioKart_copia`: 6539 objetos, 123.514 GiB. Los 207 episodios del subconjunto existen en la copia |
 | 2026-11-06 | F3.3 preprocesado v2 | `tools/preprocess.py` con ffmpeg: ~3× más rápido, diferencia ≤1 nivel de color con el método anterior; reanudable; acepta `--list`. Arregla nombres con `＞` (ancho completo en Windows) y con espacio inicial |
-| 2026-11-06 | F5A.2 preparación | `training/train_bc.py` (AMP, aumento de brillo, validación en pistas no vistas, reanuda sola, guarda mejor modelo), `configs/train/bc_v1.json`, `colab/01_preprocesar.ipynb`, `colab/02_entrenar.ipynb`, `tools/apex.py` (sync/status/pull/eval) |
+| 2026-11-06 | F5A.2 preparación | `training/train_bc.py` (AMP, aumento de brillo, validación en pistas no vistas, reanuda sola, guarda mejor modelo), `configs/train/v1.json`, `training/pipeline.py` (preprocesar → copiar → humo → entrenar, reanudable, probado de punta a punta en local), `colab/entrenar.ipynb` (1 notebook, 3 celdas de código), `tools/apex.py` (sync/status/pull/eval) |
 
 ## Bloqueos que solo puede resolver el humano
 
-1. **F5A.2** Ejecutar los dos notebooks de `colab/` (pasos en `docs/COLAB.md`).
+1. **F5A.2** Ejecutar `colab/entrenar.ipynb` (pasos en `docs/COLAB.md`).
 2. **F0.1** Invitar al compañero al repo; **F0.2** que él repita la instalación (Python 3.11).
 3. **F0.4** Preguntar al profesor el criterio de nota y el formato de entrega.

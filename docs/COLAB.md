@@ -21,11 +21,21 @@ El notebook solo llama a `training/pipeline.py`; la lógica vive en el repo.
 
 Abrir el notebook: colab.research.google.com → Archivo → Subir cuaderno, o desde VS Code con la extensión de Colab.
 
+## Presets: de menos a más intensidad
+
+| Preset | Datos | Para qué | Tiempo aprox. |
+|---|---|---|---|
+| `smoke` | 6 episodios (12 min de juego) | Comprobar que el pipeline funciona en Colab | unos minutos |
+| `elite` | 59 episodios, 3 h: 4 mejores equipos, 1º-2º, máx. 8 por pista | Primer modelo real y rápido de iterar | ~10 min preprocesar + ~1 h entrenar |
+| `v1` | 207 episodios, 10 h: podio de todos los equipos, máx. 20 por pista | Más datos y variedad de pistas | ~30 min preprocesar + 2-3 h entrenar |
+
+Después de cada preset: `pull` y `eval` en tu PC antes de subir de nivel. Cada uno guarda en su propia carpeta de `apex_kart_runs`.
+
 ## Ajustes (celda 1 del notebook)
 
 | Variable | Para qué |
 |---|---|
-| `PRESET` | Qué configuración usar: `configs/train/<preset>.json` (hoy `v1`) |
+| `PRESET` | Qué configuración usar: `smoke`, `elite` o `v1` (`configs/train/<preset>.json`) |
 | `STAGES` | `preprocess,fetch,smoke,train`. Con solo `preprocess` y runtime CPU no gastas GPU |
 | `EXTRA` | Parámetros extra de entrenamiento, p. ej. `--epochs 20 --batch 128` |
 

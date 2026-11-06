@@ -1,0 +1,22 @@
+{
+  "descripcion": "Elite: 4 mejores equipos, 1o-2o puesto, max 8 por pista (59 ep, 3 h). Validacion en 2 pistas no vistas.",
+  "subset": "results/subset_elite.txt",
+  "processed": "elite",
+  "run": "bc_elite",
+  "down": 4,
+  "stride": 2,
+  "data": "data/processed_v1",
+  "out": "runs/bc_v1",
+  "frames": 3,
+  "epochs": 15,
+  "batch": 256,
+  "lr": 0.001,
+  "workers": 2,
+  "samples_per_epoch": 40000,
+  "val_tracks": [
+    "black_forest",
+    "candela_city"
+  ],
+  "augment": true,
+  "amp": true
+}

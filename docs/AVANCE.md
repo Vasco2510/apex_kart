@@ -23,8 +23,10 @@ Bitácora de lo hecho (más reciente al final) y de lo que solo puede resolver u
 | 2026-11-06 | F3.3 preprocesado v2 | `tools/preprocess.py` con ffmpeg: ~3× más rápido, diferencia ≤1 nivel de color con el método anterior; reanudable; acepta `--list`. Arregla nombres con `＞` (ancho completo en Windows) y con espacio inicial |
 | 2026-11-06 | F5A.2 preparación | `training/train_bc.py` (AMP, aumento de brillo, validación en pistas no vistas, reanuda sola, guarda mejor modelo), `configs/train/v1.json`, `training/pipeline.py` (preprocesar → copiar → humo → entrenar, reanudable, probado de punta a punta en local), `colab/entrenar.ipynb` (1 notebook, 3 celdas de código), `tools/apex.py` (sync/status/pull/eval) |
 
+| 2026-11-06 | Estrategia por etapas | Calidad por equipo (de `results/episodios.csv`): `piedad_con_los_de_elmt` 1.20 de posición media, pero 35 de 49 episodios en `lighthouse`. Presets nuevos `smoke` (6 ep.) y `elite` (59 ep., 3 h); `v1` queda como segunda etapa. `tools/make_subset.py` acepta `--groups` y `--max-pos` |
+
 ## Bloqueos que solo puede resolver el humano
 
-1. **F5A.2** Ejecutar `colab/entrenar.ipynb` (pasos en `docs/COLAB.md`).
+1. **F5A.2** Ejecutar `colab/entrenar.ipynb` con `PRESET='smoke'` y luego `'elite'` (pasos en `docs/COLAB.md`).
 2. **F0.1** Invitar al compañero al repo; **F0.2** que él repita la instalación (Python 3.11).
 3. **F0.4** Preguntar al profesor el criterio de nota y el formato de entrega.

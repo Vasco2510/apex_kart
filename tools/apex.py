@@ -2,8 +2,9 @@
 
   python tools/apex.py sync            # sube el codigo a Drive (Colab lo copia desde ahi)
   python tools/apex.py status          # lista corridas en Drive y su ultima epoca
-  python tools/apex.py pull bc_v1      # baja model.pt y log.json de la corrida a agents/bc_cnn/weights y runs/
-  python tools/apex.py eval bc_v1      # evalua el agente con el arnés (carpeta runs/eval_bc_v1_<fecha>)
+  python tools/apex.py pull bc_v1                 # baja model.pt (mejor por error de giro) y log.json
+  python tools/apex.py pull bc_v1 --file ep20.pt  # baja una instantanea concreta (ep05.pt, ep10.pt, last.pt ...)
+  python tools/apex.py eval bc_v1 --weights ep20.pt --tracks lighthouse candela_city   # evalua ese checkpoint
 
 Rutas en Drive (cuenta Gmail, remote rclone `gmail`):
   UTEC/DEEP/MarioKart_copia      datos crudos del profesor (copia)
@@ -55,16 +56,29 @@ def status(a):
 def pull(a):
     dst = ROOT / "agents" / a.agent / "weights"
     dst.mkdir(parents=True, exist_ok=True)
-    rclone("copyto", f"{REMOTE}/apex_kart_runs/{a.run}/model.pt", str(dst / "model.pt"), "-P")
+    name = a.file if a.file != "model.pt" else "model.pt"
+    local = "model.pt" if a.file == "model.pt" else f"{a.run}_{a.file}"
+    rclone("copyto", f"{REMOTE}/apex_kart_runs/{a.run}/{name}", str(dst / local), "-P")
     (ROOT / "runs" / a.run).mkdir(parents=True, exist_ok=True)
     rclone("copyto", f"{REMOTE}/apex_kart_runs/{a.run}/log.json", str(ROOT / "runs" / a.run / "log.json"))
-    print("modelo en", dst / "model.pt")
+    print("modelo en", dst / local)
 
 
 def evaluate(a):
-    out = ROOT / "runs" / f"eval_{a.run}_{time.strftime('%m%d_%H%M')}"
-    subprocess.run([sys.executable, str(ROOT / "tools" / "evaluate.py"), str(ROOT / "agents" / a.agent / "agent.json"),
-                    "--out", str(out)], check=True)
+    out = ROOT / "runs" / f"eval_{a.run}_{Path(a.weights).stem}_{time.strftime('%m%d_%H%M')}"
+    manifest = ROOT / "agents" / a.agent / "agent.json"
+    if a.weights != "model.pt":  # manifiesto temporal apuntando a esa instantanea
+        cfg = json.loads(manifest.read_text(encoding="utf-8"))
+        cfg["name"] = f"{cfg['name']}_{Path(a.weights).stem}"
+        cfg["config"]["checkpoint"] = f"weights/{a.run}_{a.weights}"
+        manifest = manifest.with_name(f"agent_{a.run}_{Path(a.weights).stem}.json")
+        manifest.write_text(json.dumps(cfg, indent=2), encoding="utf-8")
+    cmd = [sys.executable, str(ROOT / "tools" / "evaluate.py"), str(manifest), "--out", str(out)]
+    if a.tracks:
+        cmd += ["--tracks", *a.tracks]
+    if a.seeds:
+        cmd += ["--seeds", *map(str, a.seeds)]
+    subprocess.run(cmd, check=True)
 
 
 def main():
@@ -72,8 +86,11 @@ def main():
     s = p.add_subparsers(dest="cmd", required=True)
     x = s.add_parser("sync"); x.add_argument("--dry-run", action="store_true"); x.set_defaults(f=sync)
     s.add_parser("status").set_defaults(f=status)
-    for name, f in (("pull", pull), ("eval", evaluate)):
-        x = s.add_parser(name); x.add_argument("run"); x.add_argument("--agent", default="bc_cnn"); x.set_defaults(f=f)
+    x = s.add_parser("pull"); x.add_argument("run"); x.add_argument("--agent", default="bc_cnn")
+    x.add_argument("--file", default="model.pt"); x.set_defaults(f=pull)
+    x = s.add_parser("eval"); x.add_argument("run"); x.add_argument("--agent", default="bc_cnn")
+    x.add_argument("--weights", default="model.pt"); x.add_argument("--tracks", nargs="*"); x.add_argument("--seeds", nargs="*", type=int)
+    x.set_defaults(f=evaluate)
     a = p.parse_args()
     a.f(a)
 

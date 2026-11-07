@@ -11,12 +11,15 @@
   "epochs": 40,
   "batch": 256,
   "lr": 0.001,
-  "workers": 2,
+  "workers": 8,
   "samples_per_epoch": 60000,
   "val_tracks": [
     "black_forest",
     "candela_city"
   ],
   "augment": true,
-  "amp": true
+  "amp": true,
+  "flip": true,
+  "select": "steer",
+  "save_every": 5
 }

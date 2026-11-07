@@ -8,12 +8,19 @@
   "data": "data/processed_v1",
   "out": "runs/bc_v1",
   "frames": 3,
-  "epochs": 12,
+  "epochs": 30,
   "batch": 256,
   "lr": 0.001,
-  "workers": 2,
-  "samples_per_epoch": 150000,
-  "val_tracks": ["scotland", "snowmountain", "candela_city"],
+  "workers": 8,
+  "samples_per_epoch": 100000,
+  "val_tracks": [
+    "candela_city",
+    "scotland",
+    "snowtuxpeak"
+  ],
   "augment": true,
-  "amp": true
+  "amp": true,
+  "flip": true,
+  "select": "steer",
+  "save_every": 5
 }

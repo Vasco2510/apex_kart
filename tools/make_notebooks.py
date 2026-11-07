@@ -13,7 +13,7 @@ Hace solo: preprocesar (si falta) → copiar datos al disco local → prueba de 
 Antes, una vez en tu PC: `python tools/apex.py sync` (sube el código a Drive). Al terminar: `python tools/apex.py pull <run>`.
 Para preprocesar sin gastar GPU: runtime CPU y `STAGES = 'preprocess'`."""),
     ("code", """PERSIST = '/content/drive/MyDrive/UTEC/DEEP'
-PRESET  = 'smoke'                           # smoke -> elite -> v1  (configs/train/<preset>.json)
+PRESET  = 'v1'                              # smoke | elite | v1  (configs/train/<preset>.json)
 STAGES  = 'preprocess,fetch,smoke,train'    # 'preprocess' solo = en runtime CPU
 EXTRA   = ''                                # p. ej. '--epochs 20 --batch 128'
 import os, subprocess, sys

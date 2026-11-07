@@ -7,7 +7,7 @@ N_OUT = 6
 
 
 class Net(nn.Module):
-    def __init__(self, frames=3, height=90, width=160, width_mult=1.0):
+    def __init__(self, frames=3, height=90, width=160, width_mult=1.0, dropout=0.2):
         super().__init__()
         c = [int(x * width_mult) for x in (32, 64, 96, 128)]
         self.conv = nn.Sequential(
@@ -18,9 +18,9 @@ class Net(nn.Module):
         )
         with torch.no_grad():
             n = self.conv(torch.zeros(1, 3 * frames, height, width)).numel()
-        self.head = nn.Sequential(nn.Flatten(), nn.Dropout(0.2), nn.Linear(n, 256), nn.ReLU(inplace=True),
+        self.head = nn.Sequential(nn.Flatten(), nn.Dropout(dropout), nn.Linear(n, 256), nn.ReLU(inplace=True),
                                   nn.Linear(256, N_OUT))
-        self.meta = dict(frames=frames, height=height, width=width, width_mult=width_mult)
+        self.meta = dict(frames=frames, height=height, width=width, width_mult=width_mult, dropout=dropout)
 
     def forward(self, x):  # x: (B, 3*frames, H, W) float en [0, 1]
         return self.head(self.conv(x))

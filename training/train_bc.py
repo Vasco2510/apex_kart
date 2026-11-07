@@ -10,6 +10,7 @@ Los argumentos de linea de comandos pisan los del --config.
 import argparse
 import glob
 import json
+import os
 import shutil
 import sys
 import time
@@ -26,7 +27,7 @@ from model import Net  # noqa: E402
 TRAIN_PHASES = ("GO_PHASE", "MUSIC_PHASE", "RACE_PHASE")
 DEFAULTS = dict(data=None, out=None, frames=3, epochs=10, batch=128, lr=1e-3, wd=1e-4, workers=2,
                 val_tracks=[], samples_per_epoch=0, max_minutes=0.0, seed=0, device="auto", amp=True,
-                augment=True, w_steer=1.0, w_accel=0.3, w_brake=1.0, w_nitro=1.0, w_drift=1.0, w_fire=1.0)
+                augment=True, flip=False, save_every=5, select="steer", dropout=0.2, val_samples=40000, w_steer=1.0, w_accel=0.3, w_brake=1.0, w_nitro=1.0, w_drift=1.0, w_fire=1.0)
 
 
 class Frames(Dataset):
@@ -126,9 +127,11 @@ def main():
     spacing = int(infos[train[0]]["stride"])
     tr = Frames(train, a.frames)
     va = Frames(val, a.frames) if val else None
+    if va and a.val_samples and len(va) > a.val_samples:  # submuestreo fijo: validar cuesta menos y es comparable entre epocas
+        va.index = va.index[:: -(-len(va) // a.val_samples)]
     print(f"device={dev} amp={amp} train_eps={len(train)} val_eps={len(val)} train={len(tr)} val={len(va) if va else 0} "
           f"frame={shape} spacing={spacing}", flush=True)
-    net = Net(a.frames, shape[0], shape[1]).to(dev).to(memory_format=torch.channels_last)
+    net = Net(a.frames, shape[0], shape[1], dropout=a.dropout).to(dev).to(memory_format=torch.channels_last)
     opt = torch.optim.AdamW(net.parameters(), lr=a.lr, weight_decay=a.wd)
     scaler = torch.amp.GradScaler(enabled=amp)
     out = Path(a.out)
@@ -143,7 +146,7 @@ def main():
         print(f"reanudando desde epoca {start}", flush=True)
     loss_fn = make_loss(a, dev)
     sampler = RandomSampler(tr, replacement=False, num_samples=min(a.samples_per_epoch or len(tr), len(tr)))
-    kw = dict(num_workers=a.workers, pin_memory=dev.type == "cuda", persistent_workers=a.workers > 0)
+    kw = dict(num_workers=min(a.workers, os.cpu_count() or 1), pin_memory=dev.type == "cuda", persistent_workers=a.workers > 0)
     tl = DataLoader(tr, a.batch, sampler=sampler, drop_last=True, **kw)
     vl = DataLoader(va, a.batch, **kw) if va else None
     meta = {"frames": a.frames, "spacing": spacing, "height": shape[0], "width": shape[1]}
@@ -156,6 +159,11 @@ def main():
             x, y = x.to(dev, non_blocking=True).float().div(255), y.to(dev, non_blocking=True)
             if a.augment:
                 x = augment(x)
+            if a.flip:  # espejo horizontal: el giro cambia de signo (duplica la variedad de curvas)
+                m = torch.rand(x.shape[0], device=dev) < 0.5
+                x = torch.where(m[:, None, None, None], x.flip(-1), x)
+                y = y.clone()
+                y[:, 0] = torch.where(m, -y[:, 0], y[:, 0])
             with torch.autocast(dev.type, enabled=amp):
                 l, _, _ = loss_fn(net(x.contiguous(memory_format=torch.channels_last)), y)
             opt.zero_grad(set_to_none=True)
@@ -170,14 +178,17 @@ def main():
             rec["val"] = evaluate(net, vl, dev, loss_fn, amp)
         log.append(rec)
         print(json.dumps(rec), flush=True)
-        score = rec["val"]["loss"] if vl else rec["train_loss"]
+        # criterio de "mejor": error de giro en pistas no vistas (la perdida total la domina el ruido de drift/nitro)
+        score = (rec["val"]["steer_huber"] if a.select == "steer" else rec["val"]["loss"]) if vl else rec["train_loss"]
         ck = {"state_dict": net.state_dict(), "opt": opt.state_dict(), "epoch": ep + 1, "net": net.meta,
               "meta": meta, "args": vars(a), "log": log, "best": min(best, score)}
         torch.save(ck, last)
+        light = {k: v for k, v in ck.items() if k not in ("opt", "log")}
         if score < best:
             best = score
-            light = {k: v for k, v in ck.items() if k not in ("opt", "log")}
             torch.save(light, out / "model.pt")  # mejor checkpoint, liviano, listo para entregar
+        if a.save_every and (ep + 1) % a.save_every == 0:
+            torch.save(light, out / f"ep{ep + 1:02d}.pt")  # instantaneas para comparar en el simulador
         (out / "log.json").write_text(json.dumps(log, indent=1))
         if a.max_minutes and (time.time() - t_start) / 60 > a.max_minutes:
             print("limite de tiempo alcanzado; reanuda volviendo a ejecutar el mismo comando", flush=True)

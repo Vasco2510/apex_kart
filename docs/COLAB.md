@@ -26,8 +26,8 @@ Abrir el notebook: colab.research.google.com → Archivo → Subir cuaderno, o d
 | Preset | Datos | Para qué | Tiempo aprox. |
 |---|---|---|---|
 | `smoke` | 6 episodios (12 min de juego) | Comprobar que el pipeline funciona en Colab | unos minutos |
-| `elite` | 59 episodios, 3 h: 4 mejores equipos, 1º-2º, máx. 8 por pista | Primer modelo real y rápido de iterar | ~10 min preprocesar + ~1 h entrenar |
-| `v1` | 207 episodios, 10 h: podio de todos los equipos, máx. 20 por pista | Más datos y variedad de pistas | ~30 min preprocesar + 2-3 h entrenar |
+| `elite` | 59 episodios, 3 h: 4 mejores equipos, 1º-2º, máx. 8 por pista | Primer modelo real y rápido de iterar | ~10 min preprocesar + ~20 min entrenar |
+| `v1` | 207 episodios, 10 h: podio de todos los equipos, máx. 20 por pista | Más datos y variedad de pistas | ~30 min preprocesar + ~1 h entrenar |
 
 Después de cada preset: `pull` y `eval` en tu PC antes de subir de nivel. Cada uno guarda en su propia carpeta de `apex_kart_runs`.
 

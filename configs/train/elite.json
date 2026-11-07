@@ -8,11 +8,11 @@
   "data": "data/processed_v1",
   "out": "runs/bc_v1",
   "frames": 3,
-  "epochs": 15,
+  "epochs": 40,
   "batch": 256,
   "lr": 0.001,
   "workers": 2,
-  "samples_per_epoch": 40000,
+  "samples_per_epoch": 60000,
   "val_tracks": [
     "black_forest",
     "candela_city"

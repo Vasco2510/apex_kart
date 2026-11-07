@@ -25,8 +25,10 @@ Bitácora de lo hecho (más reciente al final) y de lo que solo puede resolver u
 
 | 2026-11-06 | Estrategia por etapas | Calidad por equipo (de `results/episodios.csv`): `piedad_con_los_de_elmt` 1.20 de posición media, pero 35 de 49 episodios en `lighthouse`. Presets nuevos `smoke` (6 ep.) y `elite` (59 ep., 3 h); `v1` queda como segunda etapa. `tools/make_subset.py` acepta `--groups` y `--max-pos` |
 
+| 2026-11-07 | F5A.2 `smoke` en Colab OK | GPU T4, ~3700 muestras/s, checkpoints en Drive. `pull smoke` + `eval` en el PC funcionan (el modelo de 2 épocas no avanza: 104 m en lighthouse, igual que la línea base, como se esperaba). Con esa velocidad `elite` sube a 40 épocas × 60k muestras (~20 min) |
+
 ## Bloqueos que solo puede resolver el humano
 
-1. **F5A.2** Ejecutar `colab/entrenar.ipynb` con `PRESET='smoke'` y luego `'elite'` (pasos en `docs/COLAB.md`).
+1. **F5A.2** Ejecutar `colab/entrenar.ipynb` con `PRESET='elite'` (pasos en `docs/COLAB.md`).
 2. **F0.1** Invitar al compañero al repo; **F0.2** que él repita la instalación (Python 3.11).
 3. **F0.4** Preguntar al profesor el criterio de nota y el formato de entrega.

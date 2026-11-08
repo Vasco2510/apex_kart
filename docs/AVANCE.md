@@ -27,8 +27,13 @@ Bitácora de lo hecho (más reciente al final) y de lo que solo puede resolver u
 
 | 2026-11-07 | F5A.2 `smoke` en Colab OK | GPU T4, ~3700 muestras/s, checkpoints en Drive. `pull smoke` + `eval` en el PC funcionan (el modelo de 2 épocas no avanza: 104 m en lighthouse, igual que la línea base, como se esperaba). Con esa velocidad `elite` sube a 40 épocas × 60k muestras (~20 min) |
 
+| 2026-11-07 | F5A.2 `elite` entrenado | Mejor modelo por pérdida de validación = época 1 (casi sin entrenar). Época 15 termina `lighthouse` (880 m, 64 s) pero falla en pistas no vistas (187 m en `candela_city`). La pérdida de validación predice mal la conducción |
+| 2026-11-08 | Profesor privilegiado | `training/teacher.py` (pure pursuit sobre `path_nodes`): termina 21/21 pistas con 2 vueltas tras arreglar un bucle de rescate (botón mantenido). Es correcto pero lento (posición 5-8 de 8). Variantes de derrape/freno/nitro: ±5 %, sin salto (el kart no recoge nitro); se mantiene el profesor base |
+| 2026-11-08 | Datos del profesor | `training/dagger.py` (ruido OU para recuperaciones, karts variados, sube a Drive y borra local) + `tools/overnight.py`. Corre `teacher_r0`: 126 carreras (21 pistas × 6 semillas × 2 vueltas) → `apex_kart_processed/teacher_r0` |
+| 2026-11-08 | Episodios incompletos | 36 de 928 episodios del profesor no tienen `data.h5`/`rgb.mp4` (subidos incompletos; casi todos `IAn & 6Soto`): `results/episodios_incompletos.txt`. Fuera de los subconjuntos. El preprocesado ya omite episodios rotos |
+
 ## Bloqueos que solo puede resolver el humano
 
-1. **F5A.2** Ejecutar `colab/entrenar.ipynb` con `PRESET='elite'` (pasos en `docs/COLAB.md`).
+1. **F5B.3** Ejecutar `colab/entrenar.ipynb` con `PRESET='teacher_r0'` cuando termine la generación nocturna (pasos en `docs/COLAB.md`).
 2. **F0.1** Invitar al compañero al repo; **F0.2** que él repita la instalación (Python 3.11).
 3. **F0.4** Preguntar al profesor el criterio de nota y el formato de entrega.

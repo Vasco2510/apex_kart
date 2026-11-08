@@ -31,11 +31,21 @@ Abrir el notebook: colab.research.google.com → Archivo → Subir cuaderno, o d
 
 Después de cada preset: `pull` y `eval` en tu PC antes de subir de nivel. Cada uno guarda en su propia carpeta de `apex_kart_runs`.
 
+## Ruta del profesor (la principal)
+
+| Preset | Datos | Cómo se generan |
+|---|---|---|
+| `teacher_r0` | 126 carreras del profesor en 21 pistas, con ruido | `python tools/overnight.py --round 0` (PC, desatendido, sube a Drive) |
+| `teacher_r1` | `teacher_r0` + carreras donde conduce el estudiante y el profesor corrige (DAgger) | `python tools/overnight.py --round 1 --student agents/bc_cnn/weights/model.pt` |
+
+Ciclo: generar datos (PC) → entrenar (Colab) → `pull` el modelo → generar la siguiente ronda con el estudiante (PC) → entrenar con todo. No necesitan preprocesado en Colab: las carreras ya salen en formato de entrenamiento.
+Para dejar un proceso corriendo aunque se cierre la sesión, lanzarlo con `Start-Process` (PowerShell) y seguirlo en `logs/`.
+
 ## Ajustes (celda 1 del notebook)
 
 | Variable | Para qué |
 |---|---|
-| `PRESET` | Qué configuración usar: `smoke`, `elite` o `v1` (`configs/train/<preset>.json`) |
+| `PRESET` | Qué configuración usar: `smoke`, `elite`, `v1`, `teacher_r0` o `teacher_r1` (`configs/train/<preset>.json`) |
 | `STAGES` | `preprocess,fetch,smoke,train`. Con solo `preprocess` y runtime CPU no gastas GPU |
 | `EXTRA` | Parámetros extra de entrenamiento, p. ej. `--epochs 20 --batch 128` |
 

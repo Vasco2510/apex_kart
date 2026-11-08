@@ -1,0 +1,46 @@
+..:: Antarctica Rendering Engine 2.0 ::..
+Failed to init SDL sensor!: SDL not built with sensor support
+A_base lighthouse OK 41.4 880
+..:: Antarctica Rendering Engine 2.0 ::..
+Failed to init SDL sensor!: SDL not built with sensor support
+A_base candela_city OK 52.8 1088
+..:: Antarctica Rendering Engine 2.0 ::..
+Failed to init SDL sensor!: SDL not built with sensor support
+A_base scotland OK 55.8 1329
+..:: Antarctica Rendering Engine 2.0 ::..
+Failed to init SDL sensor!: SDL not built with sensor support
+B_drift lighthouse OK 43.0 880
+..:: Antarctica Rendering Engine 2.0 ::..
+Failed to init SDL sensor!: SDL not built with sensor support
+B_drift candela_city OK 45.9 1088
+..:: Antarctica Rendering Engine 2.0 ::..
+Failed to init SDL sensor!: SDL not built with sensor support
+B_drift scotland OK 54.0 1329
+..:: Antarctica Rendering Engine 2.0 ::..
+Failed to init SDL sensor!: SDL not built with sensor support
+C_drift_estricto lighthouse OK 43.1 880
+..:: Antarctica Rendering Engine 2.0 ::..
+Failed to init SDL sensor!: SDL not built with sensor support
+C_drift_estricto candela_city OK 46.1 1088
+..:: Antarctica Rendering Engine 2.0 ::..
+Failed to init SDL sensor!: SDL not built with sensor support
+C_drift_estricto scotland OK 60.2 1329
+..:: Antarctica Rendering Engine 2.0 ::..
+Failed to init SDL sensor!: SDL not built with sensor support
+D_menos_freno lighthouse OK 43.8 880
+..:: Antarctica Rendering Engine 2.0 ::..
+Failed to init SDL sensor!: SDL not built with sensor support
+D_menos_freno candela_city OK 45.4 1088
+..:: Antarctica Rendering Engine 2.0 ::..
+Failed to init SDL sensor!: SDL not built with sensor support
+D_menos_freno scotland OK 54.9 1329
+..:: Antarctica Rendering Engine 2.0 ::..
+Failed to init SDL sensor!: SDL not built with sensor support
+E_drift+menos_freno lighthouse OK 42.7 880
+..:: Antarctica Rendering Engine 2.0 ::..
+Failed to init SDL sensor!: SDL not built with sensor support
+E_drift+menos_freno candela_city OK 48.1 1088
+..:: Antarctica Rendering Engine 2.0 ::..
+Failed to init SDL sensor!: SDL not built with sensor support
+E_drift+menos_freno scotland OK 56.3 1329
+RESUMEN {"A_base": {"lighthouse": 41.4, "candela_city": 52.8, "scotland": 55.8}, "B_drift": {"lighthouse": 43.0, "candela_city": 45.9, "scotland": 54.0}, "C_drift_estricto": {"lighthouse": 43.1, "candela_city": 46.1, "scotland": 60.2}, "D_menos_freno": {"lighthouse": 43.8, "candela_city": 45.4, "scotland": 54.9}, "E_drift+menos_freno": {"lighthouse": 42.7, "candela_city": 48.1, "scotland": 56.3}}

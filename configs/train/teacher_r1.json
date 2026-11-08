@@ -1,0 +1,27 @@
+{
+  "descripcion": "DAgger ronda 1: datos del profesor (r0) + datos donde el estudiante conducio y el profesor corrigio (r1). Entrena desde cero con todo.",
+  "processed": [
+    "teacher_r0",
+    "teacher_r1"
+  ],
+  "run": "bc_teacher_r1",
+  "data": "data/teacher_r1",
+  "out": "runs/bc_teacher_r1",
+  "frames": 3,
+  "epochs": 30,
+  "batch": 256,
+  "lr": 0.001,
+  "workers": 8,
+  "samples_per_epoch": 100000,
+  "val_tracks": [
+    "candela_city",
+    "scotland",
+    "snowtuxpeak"
+  ],
+  "augment": true,
+  "amp": true,
+  "flip": true,
+  "select": "steer",
+  "save_every": 5,
+  "only_finished": true
+}

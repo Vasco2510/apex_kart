@@ -9,8 +9,9 @@ Plazo: ~30 días desde 2026-10-30, ~2 h/día.
 
 ## Dónde estoy
 
-**Semana 2 · día 8.** Listo: datos copiados y auditados, subconjunto v1, preprocesado rápido, entrenamiento reanudable, notebooks de Colab.
-**Siguiente (H):** ejecutar `colab/entrenar.ipynb` (un solo notebook, GPU, *Ejecutar todo*). Guía en `docs/COLAB.md`.
+**Semana 2 · día 10.** Cambio de estrategia: un **profesor** con información privilegiada (geometría de pista) conduce en el simulador, genera datos limpios en las 21 pistas, y el estudiante (solo imagen) los imita; luego DAgger corrige sus errores. El profesor termina las 21 pistas (lento: llega de los últimos contra los bots).
+**En curso (PC, de noche):** `tools/overnight.py` genera 126 carreras y las sube a Drive.
+**Siguiente (H):** Colab con `PRESET='teacher_r0'`. Guía en `docs/COLAB.md`.
 
 ## Mapa
 
@@ -94,8 +95,8 @@ graph LR
 | | Paso | Entregable | Depende | GPU | Quién |
 |---|---|---|---|---|---|
 | ✅ F5B.1 | Entorno y recompensa | `training/rewards.py` | F1.2 | No | C |
-| ⬜ F5B.2 | Profesor con estado interno (opcional) | Política que conduce bien | F5B.1 | Opc | C |
-| ⬜ F5B.3 | Estudiante desde imagen | Política de píxeles | F5B.1, F4.3 | **Sí** | H+C |
+| ✅ F5B.2 | Profesor con estado interno (opcional) | `training/teacher.py`: sigue la línea de la pista; termina las 21 pistas | F5B.1 | Opc | C |
+| 🔄 F5B.3 | Estudiante desde imagen | Estudiante imita al profesor (DAgger): `teacher_r0`, luego `teacher_r1` | F5B.1, F4.3 | **Sí** | H+C |
 
 Con ~1.5× tiempo real, RL puro desde píxeles es caro: se decide el día 14.
 

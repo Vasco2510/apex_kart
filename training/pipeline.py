@@ -102,12 +102,14 @@ def main():
         sys.exit(f"etapas desconocidas: {bad}; validas: {STAGES}")
     persist = Path(a.persist)
     raw = persist / "MarioKart_copia"
-    processed = persist / "apex_kart_processed" / cfg["processed"]
+    names = cfg["processed"] if isinstance(cfg["processed"], list) else [cfg["processed"]]  # varias rondas se agregan
+    dirs = [persist / "apex_kart_processed" / n for n in names]
+    processed = dirs[0]
     run_dir = persist / "apex_kart_runs" / cfg["run"]
-    local = Path(a.local or f"/content/processed_{cfg['processed']}")
-    expected = sum(1 for l in a.subset_path.read_text(encoding="utf-8").splitlines() if l.strip()) if a.subset_path else count_done(processed)
+    local = Path(a.local or f"/content/processed_{'+'.join(names)}")
+    expected = sum(1 for l in a.subset_path.read_text(encoding="utf-8").splitlines() if l.strip()) if a.subset_path else sum(count_done(d) for d in dirs)
     if a.subset_path is None and expected == 0:
-        sys.exit(f"no hay episodios en {processed}; genera los datos del profesor primero (tools/overnight.py)")
+        sys.exit(f"no hay episodios en {dirs}; genera los datos del profesor primero (tools/overnight.py)")
     print(f"preset={a.preset} etapas={stages} episodios={expected}\n  crudos={raw}\n  procesados={processed}\n  corrida={run_dir}", flush=True)
 
     if "preprocess" in stages and a.subset_path:
@@ -117,7 +119,8 @@ def main():
         if not torch.cuda.is_available() and not a.allow_cpu:
             sys.exit("SIN GPU: cambia el runtime a GPU (T4) o usa --allow-cpu para una prueba")
     if "fetch" in stages:
-        stage_fetch(processed, local)
+        for d in dirs:
+            stage_fetch(d, local)
     if "smoke" in stages:
         stage_smoke(a, cfg, local, local.parent / "_scratch")
     if "train" in stages:

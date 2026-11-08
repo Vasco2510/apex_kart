@@ -37,3 +37,9 @@ Bitácora de lo hecho (más reciente al final) y de lo que solo puede resolver u
 1. **F5B.3** Ejecutar `colab/entrenar.ipynb` con `PRESET='teacher_r0'` cuando termine la generación nocturna (pasos en `docs/COLAB.md`).
 2. **F0.1** Invitar al compañero al repo; **F0.2** que él repita la instalación (Python 3.11).
 3. **F0.4** Preguntar al profesor el criterio de nota y el formato de entrega.
+
+## 2026-11-08 — Colab CLI y generación
+
+- **Colab CLI** (oficial, `google-colab-cli` 0.7.5): instalada en WSL (`tools/colab.ps1` la llama desde Windows). Login OK; crear/parar sesiones y `exec` funcionan. **`drivemount` no se completa** (error conocido #113 del repo, 3 intentos con consentimiento aceptado) → el entrenamiento sigue por el notebook web. Reintentar si sale una versión que lo arregle.
+- **Pista `mines`**: el motor nativo se cae siempre al cargarla (6/6 carreras fallan). Se excluye de la generación; no está en los datos del profesor.
+- Generación `teacher_r0`: 120 episodios en Drive de 20 pistas (sin `mines`). Colab espera el marcador `_DONE` antes de entrenar.

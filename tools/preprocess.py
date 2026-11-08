@@ -45,6 +45,13 @@ def read_frames(video, width, height, down, stride):
 
 
 def process_episode(args):
+    try:
+        return _process_episode(args)
+    except Exception as e:  # un episodio roto (p. ej. subido incompleto) no debe tumbar toda la corrida
+        return str(args[0]), f"FAIL {type(e).__name__}: {str(e)[:150]}"
+
+
+def _process_episode(args):
     path, out_root, down, stride = args
     ep = Episode(path)
     out = Path(out_root) / ep.meta["episode_id"]
@@ -123,8 +130,15 @@ def main():
     print(f"{len(jobs)} episodios", file=sys.stderr, flush=True)
     t0 = time.time()
     results = map(process_episode, jobs) if a.workers <= 1 else ProcessPoolExecutor(a.workers).map(process_episode, jobs)
+    fails = []
     for i, (path, status) in enumerate(results, 1):
         print(f"[{i}/{len(jobs)}] {time.time() - t0:.0f}s {Path(path).name} {status}", flush=True)
+        if status.startswith("FAIL"):
+            fails.append((path, status))
+    if fails:
+        print(f"\n{len(fails)} episodios con error (se omiten):", flush=True)
+        for pth, st in fails:
+            print(" ", pth, st, flush=True)
 
 
 if __name__ == "__main__":

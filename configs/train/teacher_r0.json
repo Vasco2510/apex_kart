@@ -1,0 +1,24 @@
+{
+  "descripcion": "Estudiante que imita al profesor privilegiado (ronda 0): datos generados en el simulador por tools/overnight.py; solo carreras terminadas.",
+  "processed": "teacher_r0",
+  "run": "bc_teacher_r0",
+  "data": "data/teacher_r0",
+  "out": "runs/bc_teacher_r0",
+  "frames": 3,
+  "epochs": 30,
+  "batch": 256,
+  "lr": 0.001,
+  "workers": 8,
+  "samples_per_epoch": 100000,
+  "val_tracks": [
+    "candela_city",
+    "scotland",
+    "snowtuxpeak"
+  ],
+  "augment": true,
+  "amp": true,
+  "flip": true,
+  "select": "steer",
+  "save_every": 5,
+  "only_finished": true
+}

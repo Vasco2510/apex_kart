@@ -45,8 +45,10 @@ def stage_preprocess(a, cfg, raw, processed, expected):
     sh([sys.executable, "-u", "tools/preprocess.py", "--root", raw, "--list", a.subset_path, "--out", processed,
         "--down", cfg.get("down", 4), "--stride", cfg.get("stride", 2), "--workers", os.cpu_count() or 2])
     have = count_done(processed)
-    if have < expected:
+    if have < expected * 0.98:
         sys.exit(f"[preprocess] solo {have}/{expected} episodios; vuelve a ejecutar para reintentar")
+    if have < expected:
+        print(f"[preprocess] AVISO: {expected - have} episodios omitidos por error; se sigue con {have}", flush=True)
 
 
 def stage_fetch(processed, local):
@@ -93,7 +95,7 @@ def main():
     a, extra = p.parse_known_args()
     a.config_path = ROOT / "configs" / "train" / f"{a.preset}.json"
     cfg = json.loads(a.config_path.read_text(encoding="utf-8"))
-    a.subset_path = Path(a.subset) if a.subset else ROOT / cfg["subset"]
+    a.subset_path = Path(a.subset) if a.subset else (ROOT / cfg["subset"] if cfg.get("subset") else None)
     stages = [s.strip() for s in a.stages.split(",") if s.strip()]
     bad = [s for s in stages if s not in STAGES]
     if bad:
@@ -103,10 +105,12 @@ def main():
     processed = persist / "apex_kart_processed" / cfg["processed"]
     run_dir = persist / "apex_kart_runs" / cfg["run"]
     local = Path(a.local or f"/content/processed_{cfg['processed']}")
-    expected = sum(1 for l in a.subset_path.read_text(encoding="utf-8").splitlines() if l.strip())
+    expected = sum(1 for l in a.subset_path.read_text(encoding="utf-8").splitlines() if l.strip()) if a.subset_path else count_done(processed)
+    if a.subset_path is None and expected == 0:
+        sys.exit(f"no hay episodios en {processed}; genera los datos del profesor primero (tools/overnight.py)")
     print(f"preset={a.preset} etapas={stages} episodios={expected}\n  crudos={raw}\n  procesados={processed}\n  corrida={run_dir}", flush=True)
 
-    if "preprocess" in stages:
+    if "preprocess" in stages and a.subset_path:
         stage_preprocess(a, cfg, raw, processed, expected)
     if {"smoke", "train"} & set(stages):
         import torch

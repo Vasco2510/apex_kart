@@ -27,16 +27,18 @@ from model import Net  # noqa: E402
 TRAIN_PHASES = ("GO_PHASE", "MUSIC_PHASE", "RACE_PHASE")
 DEFAULTS = dict(data=None, out=None, frames=3, epochs=10, batch=128, lr=1e-3, wd=1e-4, workers=2,
                 val_tracks=[], samples_per_epoch=0, max_minutes=0.0, seed=0, device="auto", amp=True,
-                augment=True, flip=False, save_every=5, select="steer", dropout=0.2, val_samples=40000, w_steer=1.0, w_accel=0.3, w_brake=1.0, w_nitro=1.0, w_drift=1.0, w_fire=1.0)
+                augment=True, flip=False, save_every=5, select="steer", dropout=0.2, val_samples=40000, only_finished=False, w_steer=1.0, w_accel=0.3, w_brake=1.0, w_nitro=1.0, w_drift=1.0, w_fire=1.0)
 
 
 class Frames(Dataset):
     """Cada muestra apila `frames` frames guardados consecutivos (ya separados por el stride del preprocesado)."""
 
-    def __init__(self, episodes, frames):
+    def __init__(self, episodes, frames, only_finished=False):
         self.eps, self.index, self.k = [], [], frames
         for d in episodes:
             info = json.loads((Path(d) / "info.json").read_text())
+            if only_finished and not (info.get("result") or {}).get("finished", False):
+                continue  # carrera atascada o abandonada: sus etiquetas no sirven
             lab = np.load(Path(d) / "labels.npz")
             ok = np.isin(np.array(info["phases"])[lab["phase_id"]], TRAIN_PHASES)
             e = len(self.eps)
@@ -125,8 +127,8 @@ def main():
     train = [d for d in dirs if d not in val]
     shape = infos[train[0]]["frame_shape"]
     spacing = int(infos[train[0]]["stride"])
-    tr = Frames(train, a.frames)
-    va = Frames(val, a.frames) if val else None
+    tr = Frames(train, a.frames, a.only_finished)
+    va = Frames(val, a.frames, a.only_finished) if val else None
     if va and a.val_samples and len(va) > a.val_samples:  # submuestreo fijo: validar cuesta menos y es comparable entre epocas
         va.index = va.index[:: -(-len(va) // a.val_samples)]
     print(f"device={dev} amp={amp} train_eps={len(train)} val_eps={len(val)} train={len(tr)} val={len(va) if va else 0} "

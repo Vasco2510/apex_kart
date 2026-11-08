@@ -38,7 +38,7 @@ def shrink(rgb, down):
     return rgb.reshape(h // down, down, w // down, down, c).mean(axis=(1, 3)).astype(np.uint8)
 
 
-def rollout(job):
+def _rollout(job):
     track, seed, a = job
     name = f"{a['tag']}_{track}_s{seed}"
     out = Path(a["out"]) / name
@@ -114,6 +114,16 @@ def rollout(job):
         msg += " | subido" if r.returncode == 0 else f" | ERROR subiendo: {r.stderr[-200:]}"
         shutil.rmtree(out, ignore_errors=True) if r.returncode == 0 else None
     return name, msg
+
+
+def rollout(job):
+    """Una carrera aislada: si el motor nativo cae, reintenta una vez y si no, informa sin tumbar el lote."""
+    for intento in (1, 2):
+        try:
+            return _rollout(job)
+        except Exception as e:  # noqa: BLE001
+            err = f"{type(e).__name__}: {e}"
+    return f"{job[0]}_s{job[1]}", f"FALLO tras 2 intentos ({err})"
 
 
 def main():

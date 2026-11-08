@@ -36,6 +36,21 @@ def count_done(d):
     return len(list(Path(d).glob("*/info.json"))) if Path(d).exists() else 0
 
 
+def wait_generation(dirs, max_hours):
+    """Espera a que el PC termine de generar (marcador _DONE en cada ronda) para poder lanzar Colab y olvidarse."""
+    t0 = time.time()
+    while True:
+        falta = [d for d in dirs if not (Path(d) / "_DONE").exists()]
+        if not falta:
+            print("generacion terminada (_DONE)", flush=True)
+            return
+        if time.time() - t0 > max_hours * 3600:
+            print(f"AVISO: {max_hours} h de espera agotadas; sigo con lo que hay ({sum(count_done(d) for d in dirs)} episodios)", flush=True)
+            return
+        print(f"[{(time.time() - t0) / 60:.0f} min] esperando generacion en el PC: {sum(count_done(d) for d in dirs)} episodios", flush=True)
+        time.sleep(120)
+
+
 def stage_preprocess(a, cfg, raw, processed, expected):
     have = count_done(processed)
     if have >= expected:
@@ -92,6 +107,7 @@ def main():
     p.add_argument("--subset", help="lista de episodios (por defecto la del preset)")
     p.add_argument("--max-minutes", type=float, default=150)
     p.add_argument("--allow-cpu", action="store_true")
+    p.add_argument("--wait-hours", type=float, default=3, help="espera al marcador _DONE de las rondas del profesor (0 = no esperar)")
     a, extra = p.parse_known_args()
     a.config_path = ROOT / "configs" / "train" / f"{a.preset}.json"
     cfg = json.loads(a.config_path.read_text(encoding="utf-8"))
@@ -107,6 +123,8 @@ def main():
     processed = dirs[0]
     run_dir = persist / "apex_kart_runs" / cfg["run"]
     local = Path(a.local or f"/content/processed_{'+'.join(names)}")
+    if not a.subset_path and a.wait_hours > 0 and "fetch" in stages:
+        wait_generation(dirs, a.wait_hours)
     expected = sum(1 for l in a.subset_path.read_text(encoding="utf-8").splitlines() if l.strip()) if a.subset_path else sum(count_done(d) for d in dirs)
     if a.subset_path is None and expected == 0:
         sys.exit(f"no hay episodios en {dirs}; genera los datos del profesor primero (tools/overnight.py)")

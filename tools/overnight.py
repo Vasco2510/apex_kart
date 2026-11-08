@@ -50,6 +50,7 @@ def main():
     subprocess.run(cmd, cwd=ROOT)
     subprocess.run([sys.executable, str(ROOT / "tools" / "apex.py"), "sync"], cwd=ROOT)
     final = done_remote(dest)
+    subprocess.run(["rclone", "rcat", f"{dest}/_DONE"], input=str(len(final)), text=True)  # avisa a Colab de que ya hay datos completos
     lines = [f"# Informe {name}", "", f"- Episodios subidos a `{dest}`: {len(final)}", ""]
     (ROOT / "results" / f"overnight_{name}.md").write_text("\n".join(lines) + "\n", encoding="utf-8")
     print(f"[{time.strftime('%H:%M:%S')}] terminado: {len(final)} episodios en Drive", flush=True)

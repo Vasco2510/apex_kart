@@ -28,3 +28,6 @@ rclone_*.log
 
 # manifiestos temporales generados por tools/apex.py eval
 agents/*/agent_*.json
+
+# logs de procesos largos (el resumen util va en results/ y docs/AVANCE.md)
+logs/

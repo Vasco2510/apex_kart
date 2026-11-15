@@ -52,12 +52,12 @@ Resultado: la carpeta contiene cientos de episodios de todos los grupos. Cada ep
 Declaración del profesor: "vale todo, toda tecnica toda estratgia o cheat con tal de cosneguir un mejor performance", sin restricciones de método.
 
 - Enunciado oficial: No tenemos enunciado oficial, pero el objetivo es entrenar un agente que conduzca bien en el juego. Se puede usar cualquier técnica de aprendizaje profundo, aprendizaje por refuerzo, o incluso heurísticas y trucos. Tenemos informacion en el readme sobre de que trata el proyecto. 
-- Criterio de evaluación (¿ranking con `league`? ¿informe? ¿ambos?): [COMPLETAR]
+- Criterio de evaluación (confirmado por el usuario, 2026-11-15): **primero** puntúa terminar las carreras base (pistas conocidas); **luego** se añaden pistas nuevas y ahí está el puntaje especial para llegar a la nota máxima (20). El profesor ejecuta los modelos de todos los grupos juntos y compara cuáles rinden mejor (competencia entre agentes).
 - Formato de entrega (¿`agent.json` más checkpoint? ¿informe? ¿presentación?): No hay formato de entrega pero si deberiamos tener un agente o model olisto para que el profe l oejecute independientemente cuando requeira hacer competir a los agentes entrados por los alumnos. 
 - Restricciones de inferencia (CPU o GPU, tiempo por acción): no hay
 - Pistas de evaluación: se usarán pistas conocidas y también pistas nuevas que el profesor no ha publicado (podrían estar en internet; eventualmente se podrían usar para entrenar). **Hay que generalizar a pistas no vistas.**
 - Recursos/herramientas del agente: sin limitaciones (confirmado por el usuario). Intérprete y librerías: libres, pero el intérprete del manifest (`python`) debe tener `stk-agent` instalado.
-- Formato de entrega: no aclarado; supuesto de trabajo = carpeta con `agent.json` + clase + pesos, más exportación portable de los pesos para convertir sin reentrenar.
+- Formato de entrega: no especificado; lo seguro es un modelo o sus pesos que el profesor ejecute junto a los de otros grupos. Supuesto de trabajo = carpeta con `agent.json` + clase + pesos, más exportación portable de los pesos para convertir sin reentrenar.
 - Plazo del proyecto final: ~30 días desde 2026-10-30, ~2 h/día del usuario.
 - Tamaño del grupo: 2 personas
 - ¿Se permite usar los datos de todos los grupos?: totalmmente si. De hecho es lo recomendado

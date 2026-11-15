@@ -1,6 +1,0 @@
-Z:\documentacion\IA_CHATS\cursos\DEEP\proyecto\src\stk_agent\env.py:147: UserWarning: reward_fn no definido: reward=0.0. La librería no diseña ni aprende tu recompensa.
-  self.multi = MultiAgentEnv(settings, [Participant('agent', slot)], reward_fn,
-Z:\documentacion\IA_CHATS\cursos\DEEP\proyecto\src\stk_agent\env.py:147: UserWarning: reward_fn no definido: reward=0.0. La librería no diseña ni aprende tu recompensa.
-  self.multi = MultiAgentEnv(settings, [Participant('agent', slot)], reward_fn,
-Z:\documentacion\IA_CHATS\cursos\DEEP\proyecto\src\stk_agent\env.py:147: UserWarning: reward_fn no definido: reward=0.0. La librería no diseña ni aprende tu recompensa.
-  self.multi = MultiAgentEnv(settings, [Participant('agent', slot)], reward_fn,

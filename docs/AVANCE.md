@@ -49,3 +49,8 @@ Bitácora de lo hecho (más reciente al final) y de lo que solo puede resolver u
 - `bc_teacher_r0` (30 épocas, val 0.35): termina `lighthouse` y `abyss` (vistas); NO termina `candela_city` (459 m), `scotland` (157 m), `snowtuxpeak` (692 m). Puesto 8/8 en todas.
 - Lanzada DAgger r1: `overnight.py --round 1 --student data/student_r0.pt --beta 0.5 --seeds 1 2 3 --noise 0.2 --workers 4 --skip-tracks mines` (PID 30156, `logs/overnight_r1.log`). `dagger.py` limita torch a 1 hilo por proceso.
 - WSL colgado (HCS timeout); no se necesita: la CLI de Colab está descartada (`drivemount` falla).
+
+## 2026-11-15 — Orden del repo y criterio del profesor
+
+- Criterio y entrega confirmados (ver `ENUNCIADO.md`): primero terminar carreras base, luego pistas nuevas (puntaje especial); el profesor corre los modelos de todos los grupos.
+- Orden: `docs/ESTRUCTURA.md`; `logs/` fuera de git; `pull` guarda pesos por corrida (`weights/<run>/`) y `eval` los usa explícitamente + guarda resumen en `results/evals/` (antes un `pull` pisaba `model.pt` y se podía evaluar el modelo equivocado). Nuevo `tools/bench_sim.py` para medir el simulador en otras máquinas.

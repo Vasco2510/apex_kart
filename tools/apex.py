@@ -14,6 +14,7 @@ Rutas en Drive (cuenta Gmail, remote rclone `gmail`):
 """
 import argparse
 import json
+import shutil
 import subprocess
 import sys
 import time
@@ -54,31 +55,41 @@ def status(a):
 
 
 def pull(a):
-    dst = ROOT / "agents" / a.agent / "weights"
+    """Pesos de cada corrida en su carpeta: agents/<agent>/weights/<run>/<file>. model.pt sin sufijo = el ultimo traido."""
+    dst = ROOT / "agents" / a.agent / "weights" / a.run
     dst.mkdir(parents=True, exist_ok=True)
-    name = a.file if a.file != "model.pt" else "model.pt"
-    local = "model.pt" if a.file == "model.pt" else f"{a.run}_{a.file}"
-    rclone("copyto", f"{REMOTE}/apex_kart_runs/{a.run}/{name}", str(dst / local), "-P")
+    rclone("copyto", f"{REMOTE}/apex_kart_runs/{a.run}/{a.file}", str(dst / a.file), "-P")
     (ROOT / "runs" / a.run).mkdir(parents=True, exist_ok=True)
     rclone("copyto", f"{REMOTE}/apex_kart_runs/{a.run}/log.json", str(ROOT / "runs" / a.run / "log.json"))
-    print("modelo en", dst / local)
+    if a.file == "model.pt":  # copia "actual" para quien use el manifiesto por defecto
+        shutil.copyfile(dst / a.file, dst.parent / "model.pt")
+    print("modelo en", dst / a.file)
 
 
 def evaluate(a):
-    out = ROOT / "runs" / f"eval_{a.run}_{Path(a.weights).stem}_{time.strftime('%m%d_%H%M')}"
-    manifest = ROOT / "agents" / a.agent / "agent.json"
-    if a.weights != "model.pt":  # manifiesto temporal apuntando a esa instantanea
-        cfg = json.loads(manifest.read_text(encoding="utf-8"))
-        cfg["name"] = f"{cfg['name']}_{Path(a.weights).stem}"
-        cfg["config"]["checkpoint"] = f"weights/{a.run}_{a.weights}"
-        manifest = manifest.with_name(f"agent_{a.run}_{Path(a.weights).stem}.json")
-        manifest.write_text(json.dumps(cfg, indent=2), encoding="utf-8")
+    """Evalua SIEMPRE los pesos de la corrida indicada (manifiesto temporal) y deja un resumen versionable en results/evals/."""
+    stem = Path(a.weights).stem
+    out = ROOT / "runs" / f"eval_{a.run}_{stem}_{time.strftime('%m%d_%H%M')}"
+    base = ROOT / "agents" / a.agent / "agent.json"
+    ckpt = f"weights/{a.run}/{a.weights}"
+    if not (base.parent / ckpt).exists():
+        sys.exit(f"no existe {base.parent / ckpt}: ejecuta  python tools/apex.py pull {a.run}")
+    cfg = json.loads(base.read_text(encoding="utf-8"))
+    cfg["name"] = f"{cfg['name']}_{a.run}_{stem}"
+    cfg["config"]["checkpoint"] = ckpt
+    manifest = base.with_name(f"agent_{a.run}_{stem}.json")
+    manifest.write_text(json.dumps(cfg, indent=2), encoding="utf-8")
     cmd = [sys.executable, str(ROOT / "tools" / "evaluate.py"), str(manifest), "--out", str(out)]
     if a.tracks:
         cmd += ["--tracks", *a.tracks]
     if a.seeds:
         cmd += ["--seeds", *map(str, a.seeds)]
     subprocess.run(cmd, check=True)
+    keep = ROOT / "results" / "evals"
+    keep.mkdir(parents=True, exist_ok=True)
+    if (out / "summary.json").exists():
+        shutil.copyfile(out / "summary.json", keep / f"{out.name}.json")
+        print("resumen guardado en", keep / f"{out.name}.json")
 
 
 def main():

@@ -11,6 +11,7 @@ Plazo: ~30 días desde 2026-10-30, ~2 h/día.
 
 **Semana 3 · día 17 (2026-11-15).** Estudiante `teacher_r0` entrenado y evaluado: **termina las pistas vistas (2/2) y ninguna de las nuevas (0/3)**, puesto 8/8. Ahora corre **DAgger ronda 1** en el PC (60 carreras, ~2 h, sube a Drive).
 **Siguiente (H):** cuando termine DAgger, Colab con `PRESET='teacher_r1'` (GPU). Luego `pull` + `eval`.
+**Prioridad (por el criterio del profesor):** 1) terminar siempre las pistas conocidas, 2) generalizar a pistas nuevas, 3) velocidad frente a otros agentes. Estructura y nombres: `docs/ESTRUCTURA.md`.
 **Saldo Colab:** 167 unidades (un entrenamiento ≈ 2 unidades: no es el límite).
 
 ## Rondas (el plan que seguimos)
@@ -55,7 +56,7 @@ graph LR
 | ✅ F0.2 | Entorno Python 3.11 | `doctor --engine` OK | — | H |
 | ✅ F0.3 | Decidir cómputo | Colab con plan Google AI Pro | — | H |
 | 🔄 F0.1 | Repo y compañero | Repo `apex_kart` creado; **falta invitar al compañero** | — | H |
-| 🔄 F0.4 | Dudas del enunciado | Respuestas en `ENUNCIADO.md`; falta criterio de nota y formato de entrega | — | H |
+| ✅ F0.4 | Dudas del enunciado | Criterio: 1º terminar carreras base, 2º pistas nuevas (puntaje especial); competencia entre grupos. Entrega: modelo/pesos ejecutable por el profesor | — | H |
 | 🔄 F0.5 | Convenciones | Carpetas, datos fuera de git, semillas, registro | F0.1 | H+C |
 
 ## F1 · Motor y línea base (sin GPU)

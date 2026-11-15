@@ -44,6 +44,7 @@ def main(argv=None):
     p.add_argument("--set", default="configs/eval_set.json")
     p.add_argument("--tracks", nargs="+")
     p.add_argument("--seeds", nargs="+", type=int)
+    p.add_argument("--video", action="store_true", help="Guarda view_0.mp4 por carrera")
     p.add_argument("--out", required=True, help="Carpeta NUEVA de resultados")
     a = p.parse_args(argv)
     spec, base = load_set(a.set)
@@ -57,7 +58,7 @@ def main(argv=None):
             cfg = RaceSettings.from_dict({**base, "track": track, "seed": seed}) if hasattr(RaceSettings, "from_dict") \
                 else RaceSettings(**{**base, "track": track, "seed": seed})
             try:
-                rep = run_race([a.manifest], cfg, out / f"{track}_s{seed}")
+                rep = run_race([a.manifest], cfg, out / f"{track}_s{seed}", video=a.video)
                 r = rep["results"][0]
                 rows.append({"track": track, "seed": seed, "finished": bool(r["finished"]),
                              "finish_time": r["finish_time"], "position": r["native_position"],

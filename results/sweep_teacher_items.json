@@ -1,0 +1,152 @@
+[
+ {
+  "cfg": "base",
+  "track": "lighthouse",
+  "finished": true,
+  "finish_time": 84.6741943359375,
+  "distance": 1759.982666015625,
+  "position": 8,
+  "steps": 2691,
+  "wall_s": 59.6
+ },
+ {
+  "cfg": "base",
+  "track": "scotland",
+  "finished": true,
+  "finish_time": 110.8296127319336,
+  "distance": 2657.475341796875,
+  "position": 8,
+  "steps": 3476,
+  "wall_s": 78.5
+ },
+ {
+  "cfg": "base",
+  "track": "snowtuxpeak",
+  "finished": true,
+  "finish_time": 88.71243286132812,
+  "distance": 1985.34033203125,
+  "position": 6,
+  "steps": 2812,
+  "wall_s": 59.9
+ },
+ {
+  "cfg": "items",
+  "track": "lighthouse",
+  "finished": true,
+  "finish_time": 85.26444244384766,
+  "distance": 1759.8057861328125,
+  "position": 8,
+  "steps": 2709,
+  "wall_s": 62.0
+ },
+ {
+  "cfg": "items",
+  "track": "scotland",
+  "finished": true,
+  "finish_time": 108.28770446777344,
+  "distance": 2657.76318359375,
+  "position": 8,
+  "steps": 3400,
+  "wall_s": 76.3
+ },
+ {
+  "cfg": "items",
+  "track": "snowtuxpeak",
+  "finished": true,
+  "finish_time": 94.66400146484375,
+  "distance": 1985.2655029296875,
+  "position": 8,
+  "steps": 2991,
+  "wall_s": 65.1
+ },
+ {
+  "cfg": "items_fire",
+  "track": "lighthouse",
+  "finished": true,
+  "finish_time": 81.34721374511719,
+  "distance": 1759.854736328125,
+  "position": 7,
+  "steps": 2591,
+  "wall_s": 71.6
+ },
+ {
+  "cfg": "items_fire",
+  "track": "scotland",
+  "finished": true,
+  "finish_time": 111.92868041992188,
+  "distance": 2657.548583984375,
+  "position": 8,
+  "steps": 3509,
+  "wall_s": 98.4
+ },
+ {
+  "cfg": "items_fire",
+  "track": "snowtuxpeak",
+  "finished": true,
+  "finish_time": 85.34477233886719,
+  "distance": 1985.3861083984375,
+  "position": 2,
+  "steps": 2711,
+  "wall_s": 75.7
+ },
+ {
+  "cfg": "items_nitro",
+  "track": "lighthouse",
+  "finished": true,
+  "finish_time": 82.89816284179688,
+  "distance": 1759.789794921875,
+  "position": 7,
+  "steps": 2638,
+  "wall_s": 62.5
+ },
+ {
+  "cfg": "items_nitro",
+  "track": "scotland",
+  "finished": true,
+  "finish_time": 113.76152801513672,
+  "distance": 2657.572021484375,
+  "position": 8,
+  "steps": 3564,
+  "wall_s": 79.4
+ },
+ {
+  "cfg": "items_nitro",
+  "track": "snowtuxpeak",
+  "finished": true,
+  "finish_time": 85.59577941894531,
+  "distance": 1985.3209228515625,
+  "position": 2,
+  "steps": 2719,
+  "wall_s": 53.8
+ },
+ {
+  "cfg": "nitro",
+  "track": "lighthouse",
+  "finished": true,
+  "finish_time": 83.5406723022461,
+  "distance": 1759.97802734375,
+  "position": 8,
+  "steps": 2657,
+  "wall_s": 58.8
+ },
+ {
+  "cfg": "nitro",
+  "track": "scotland",
+  "finished": true,
+  "finish_time": 108.5950927734375,
+  "distance": 2657.563720703125,
+  "position": 5,
+  "steps": 3409,
+  "wall_s": 64.9
+ },
+ {
+  "cfg": "nitro",
+  "track": "snowtuxpeak",
+  "finished": true,
+  "finish_time": 89.56243896484375,
+  "distance": 1985.32080078125,
+  "position": 7,
+  "steps": 2838,
+  "wall_s": 54.0
+ }
+]

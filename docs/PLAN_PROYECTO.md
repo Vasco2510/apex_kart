@@ -117,7 +117,7 @@ Con ~1.5× tiempo real, RL puro desde píxeles es caro: se decide el día 14.
 
 | | Paso | Entregable | Depende | Quién |
 |---|---|---|---|---|
-| 🔄 F6.1 | Analizar fallos | Falla en pistas nuevas: errores acumulados → DAgger | F5A.3 | C |
+| 🔄 F6.1 | Analizar fallos | Falla en pistas nuevas: errores acumulados → DAgger. Regla anti-atasco en el agente: candela 151→722 m, snowtuxpeak 432→732 m, abyss termina. Profesor: no mejora con más agresividad; items/fire opcionales sin ganancia clara (`sweep_teacher*.json`) | F5A.3 | C |
 | 🔄 F6.2 | Una mejora por vez | Código listo: giro por clases, pesos brake/nitro, cabezas auxiliares, aumento. Falta correr `teacher_r2`, `_bins`, `_binsaux` en Colab y comparar | F6.1 | H+C |
 | ⬜ F6.3 | Comparar | Tabla antes/después, mismas semillas | F6.2, F4.4 | C |
 

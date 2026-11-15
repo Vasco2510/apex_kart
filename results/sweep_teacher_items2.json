@@ -1,0 +1,68 @@
+[
+ {
+  "cfg": "base",
+  "track": "candela_city",
+  "seed": 12,
+  "finished": true,
+  "finish_time": 91.03814697265625,
+  "distance": 2175.687744140625,
+  "position": 1,
+  "steps": 2882,
+  "wall_s": 85.0
+ },
+ {
+  "cfg": "base",
+  "track": "abyss",
+  "seed": 12,
+  "finished": true,
+  "finish_time": 125.47246551513672,
+  "distance": 2524.319091796875,
+  "position": 8,
+  "steps": 3915,
+  "wall_s": 101.3
+ },
+ {
+  "cfg": "base",
+  "track": "zengarden",
+  "seed": 12,
+  "finished": true,
+  "finish_time": 72.94999694824219,
+  "distance": 1420.7943115234375,
+  "position": 7,
+  "steps": 2339,
+  "wall_s": 52.4
+ },
+ {
+  "cfg": "items_nitro",
+  "track": "candela_city",
+  "seed": 12,
+  "finished": true,
+  "finish_time": 89.30522155761719,
+  "distance": 2175.671630859375,
+  "position": 1,
+  "steps": 2830,
+  "wall_s": 86.4
+ },
+ {
+  "cfg": "items_nitro",
+  "track": "abyss",
+  "seed": 12,
+  "finished": true,
+  "finish_time": 122.07167053222656,
+  "distance": 2524.366455078125,
+  "position": 8,
+  "steps": 3813,
+  "wall_s": 86.2
+ },
+ {
+  "cfg": "items_nitro",
+  "track": "zengarden",
+  "seed": 12,
+  "finished": true,
+  "finish_time": 84.55000305175781,
+  "distance": 1420.7943115234375,
+  "position": 8,
+  "steps": 2687,
+  "wall_s": 58.0
+ }
+]

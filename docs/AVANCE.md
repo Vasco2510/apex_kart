@@ -63,3 +63,8 @@ Bitácora de lo hecho (más reciente al final) y de lo que solo puede resolver u
 - Presets para comparar con los mismos datos: `teacher_r2` (base), `teacher_r2_bins`, `teacher_r2_binsaux`. Notebook con lista `PRESETS`.
 - Entrega: `tools/make_final.py <run>` arma `agents/bc_cnn/final/` (versionada, con pesos); `agents/bc_cnn/agent.json` apunta ahí.
 
+
+## 2026-11-15 — Regla anti-atasco y profesor (agente A)
+
+- Agente r1 con regla anti-atasco (`agents/bc_cnn/agent.py`: imagen casi quieta 1 s → girar ±0.5 y acelerar; 2 s → rescate; umbral 1.5 de dif. media de píxeles, calibrado con los videos): snowtuxpeak 432→732 m, candela_city 151→722 m, abyss 72 m→**termina** (1262 m). Ninguna nueva termina aún. Resumen: `results/evals/eval_bc_teacher_r1_unstick_1115.json`.
+- Barrido del profesor (`tools/sweep_teacher.py`, `results/sweep_teacher*.json`): más ganancia/lookahead corto/derrape **no mejora** (posiciones 5–8, tiempos iguales o peores): el límite no es el volante. Nuevo en `teacher.py` (opcional, apagado por defecto): `--items` (desvío a cajas/nitro, esquiva banana/chicle; tipos pystk2: 0 caja, 1 banana, 2/3 nitro, 4 chicle), `--fire`, nitro más agresivo. Con 6 pistas: tiempos −2/−3 s en 2, +12 s en zengarden, posición por `fire` muy ruidosa (snowtuxpeak 8→2). **No hay mejora clara → no se regeneraron datos.**

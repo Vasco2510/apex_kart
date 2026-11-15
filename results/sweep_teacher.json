@@ -1,0 +1,122 @@
+[
+ {
+  "cfg": "base",
+  "track": "lighthouse",
+  "finished": true,
+  "finish_time": 41.20572280883789,
+  "distance": 880.1574096679688,
+  "position": 7,
+  "steps": 1387,
+  "wall_s": 29.1
+ },
+ {
+  "cfg": "base",
+  "track": "scotland",
+  "finished": true,
+  "finish_time": 54.220130920410156,
+  "distance": 1329.079833984375,
+  "position": 5,
+  "steps": 1778,
+  "wall_s": 36.4
+ },
+ {
+  "cfg": "base",
+  "track": "snowtuxpeak",
+  "finished": true,
+  "finish_time": 45.14834976196289,
+  "distance": 992.640625,
+  "position": 7,
+  "steps": 1505,
+  "wall_s": 29.3
+ },
+ {
+  "cfg": "agresivo",
+  "track": "lighthouse",
+  "finished": true,
+  "finish_time": 40.00529479980469,
+  "distance": 880.1749877929688,
+  "position": 8,
+  "steps": 1351,
+  "wall_s": 27.9
+ },
+ {
+  "cfg": "agresivo",
+  "track": "scotland",
+  "finished": true,
+  "finish_time": 55.67281723022461,
+  "distance": 1328.946044921875,
+  "position": 6,
+  "steps": 1821,
+  "wall_s": 37.4
+ },
+ {
+  "cfg": "agresivo",
+  "track": "snowtuxpeak",
+  "finished": true,
+  "finish_time": 49.7379035949707,
+  "distance": 992.9175415039062,
+  "position": 8,
+  "steps": 1643,
+  "wall_s": 32.0
+ },
+ {
+  "cfg": "agresivo_drift",
+  "track": "lighthouse",
+  "finished": true,
+  "finish_time": 41.53209686279297,
+  "distance": 879.9078979492188,
+  "position": 7,
+  "steps": 1397,
+  "wall_s": 29.3
+ },
+ {
+  "cfg": "agresivo_drift",
+  "track": "scotland",
+  "finished": true,
+  "finish_time": 54.81446075439453,
+  "distance": 1328.7581787109375,
+  "position": 6,
+  "steps": 1795,
+  "wall_s": 36.3
+ },
+ {
+  "cfg": "agresivo_drift",
+  "track": "snowtuxpeak",
+  "finished": true,
+  "finish_time": 47.34874725341797,
+  "distance": 992.6031494140625,
+  "position": 8,
+  "steps": 1571,
+  "wall_s": 29.9
+ },
+ {
+  "cfg": "muy_agresivo",
+  "track": "lighthouse",
+  "finished": true,
+  "finish_time": 42.17161178588867,
+  "distance": 880.2247314453125,
+  "position": 7,
+  "steps": 1416,
+  "wall_s": 27.8
+ },
+ {
+  "cfg": "muy_agresivo",
+  "track": "scotland",
+  "finished": true,
+  "finish_time": 54.99713897705078,
+  "distance": 1328.7864990234375,
+  "position": 7,
+  "steps": 1801,
+  "wall_s": 40.5
+ },
+ {
+  "cfg": "muy_agresivo",
+  "track": "snowtuxpeak",
+  "finished": true,
+  "finish_time": 48.44791030883789,
+  "distance": 992.623779296875,
+  "position": 8,
+  "steps": 1604,
+  "wall_s": 35.0
+ }
+]

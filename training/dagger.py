@@ -93,7 +93,7 @@ def _rollout(job):
         st = info["privileged"]
         k = st["karts"][0]
         phase = st["phase"]
-        lab = teacher.action(k, in_race=phase in RACE)
+        lab = teacher.action(k, in_race=phase in RACE, items=st.get("items"), karts=st.get("karts"))
         if student is not None:
             stu = student.act(obs)  # mantiene el buffer de frames al dia aunque no se use
             if step % 60 == 0:  # se decide quien conduce por tramos de ~2 s

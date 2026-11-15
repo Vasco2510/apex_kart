@@ -1,6 +1,10 @@
 {
-  "name": "bc_cnn",
+  "name": "bc_cnn_dev",
   "entry": "agent.py",
   "class": "Agent",
-  "config": {"checkpoint": "weights/model.pt", "device": "auto", "threshold": 0.5}
+  "config": {
+    "checkpoint": "final/model.pt",
+    "device": "auto",
+    "threshold": 0.5
+  }
 }

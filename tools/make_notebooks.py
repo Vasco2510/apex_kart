@@ -9,11 +9,13 @@ OUT = Path(__file__).resolve().parents[1] / "colab"
 CELLS = [
     ("markdown", """# apex_kart · Entrenar (todo automático)
 **Ejecutar todo** (Ctrl+F9). Cuenta: la de Gmail con el plan. Runtime: **GPU (T4)**.
-Hace solo: preprocesar (si falta) → copiar datos al disco local → prueba de humo → entrenar. Todo es **reanudable**: si Colab se corta, vuelve a ejecutar.
+Para comparar varias variantes seguidas, pon varios nombres en `PRESETS` (celda 1). Hace solo: preprocesar (si falta) → copiar datos al disco local → prueba de humo → entrenar. Todo es **reanudable**: si Colab se corta, vuelve a ejecutar.
 Antes, una vez en tu PC: `python tools/apex.py sync` (sube el código a Drive). Al terminar: `python tools/apex.py pull <run>`.
 Para preprocesar sin gastar GPU: runtime CPU y `STAGES = 'preprocess'`."""),
     ("code", """PERSIST = '/content/drive/MyDrive/UTEC/DEEP'
-PRESET  = 'teacher_r0'                      # smoke | elite | v1 | teacher_r0 | teacher_r1  (configs/train/<preset>.json)
+# Presets a entrenar, EN ORDEN (configs/train/<preset>.json). Uno solo = lo normal. Para comparar variantes con los mismos datos:
+#   PRESETS = ['teacher_r2_bins', 'teacher_r2_binsaux', 'teacher_r2']   (~40 min y ~2 unidades cada una; los datos se copian una sola vez)
+PRESETS = ['teacher_r2_bins']               # otros: teacher_r2 (base) | teacher_r2_binsaux | teacher_r1 | teacher_r0 | v1 | smoke
 STAGES  = 'preprocess,fetch,smoke,train'    # 'preprocess' solo = en runtime CPU
 EXTRA   = ''                                # p. ej. '--epochs 20 --batch 128'
 import os, subprocess, sys
@@ -27,15 +29,23 @@ subprocess.check_call(f'rm -rf /content/repo && cp -r {PERSIST}/apex_kart_code /
 os.chdir('/content/repo')
 !pip -q install --no-deps -e .
 !pip -q install imageio-ffmpeg h5py"""),
-    ("code", """try: PRESET, STAGES, EXTRA, PERSIST
+    ("code", """try: PRESETS, STAGES, EXTRA, PERSIST
 except NameError: raise SystemExit('Faltan las variables: ejecuta primero la celda 1 (la de configuracion).')
-cmd = [sys.executable, '-u', 'training/pipeline.py', '--preset', PRESET, '--persist', PERSIST, '--stages', STAGES] + EXTRA.split()
-print('$', ' '.join(cmd))
-p = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True, bufsize=1, cwd='/content/repo')
-for line in p.stdout:
-    print(line, end='')
-p.wait()
-if p.returncode: raise SystemExit(f'el pipeline termino con error (codigo {p.returncode})')
+if isinstance(PRESETS, str): PRESETS = [PRESETS]
+done = []
+for PRESET in PRESETS:
+    cmd = [sys.executable, '-u', 'training/pipeline.py', '--preset', PRESET, '--persist', PERSIST, '--stages', STAGES] + EXTRA.split()
+    print('
+===== ' + PRESET + ' =====
+$', ' '.join(cmd))
+    p = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True, bufsize=1, cwd='/content/repo')
+    for line in p.stdout:
+        print(line, end='')
+    p.wait()
+    if p.returncode: raise SystemExit(f'{PRESET}: el pipeline termino con error (codigo {p.returncode}); ya terminados: {done}')
+    done.append(PRESET)
+print('
+Terminados:', done, '-> en tu PC: python tools/apex.py pull <run> (la corrida de cada preset esta en su json)')
 drive.flush_and_unmount(); print('Drive sincronizado')"""),
 ]
 

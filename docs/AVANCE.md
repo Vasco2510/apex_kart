@@ -54,3 +54,12 @@ Bitácora de lo hecho (más reciente al final) y de lo que solo puede resolver u
 
 - Criterio y entrega confirmados (ver `ENUNCIADO.md`): primero terminar carreras base, luego pistas nuevas (puntaje especial); el profesor corre los modelos de todos los grupos.
 - Orden: `docs/ESTRUCTURA.md`; `logs/` fuera de git; `pull` guarda pesos por corrida (`weights/<run>/`) y `eval` los usa explícitamente + guarda resumen en `results/evals/` (antes un `pull` pisaba `model.pt` y se podía evaluar el modelo equivocado). Nuevo `tools/bench_sim.py` para medir el simulador en otras máquinas.
+
+## 2026-11-15 — Código de entrenamiento y entrega (agente B)
+
+- Revisión (Opus) halló: giro tímido por Huber, botones que predicen la clase mayoritaria, selección por val poco fiable. Respuesta en `training/train_bc.py`: `steer_loss='bins'` (21 clases, entropía cruzada, decodifica el valor esperado cerca del bin ganador), `pos_weight` para brake/nitro, `aux_heads`, aumento fotométrico (color por canal, ruido, desenfoque), `select='turn'` (error en curvas) y se guarda también `model_last.pt`. Registra tasas reales de etiquetas (`label_rates.json`).
+- `model.py`: `Net(steer_bins, n_aux)`; el agente sigue usando la salida de 6 valores, así que los checkpoints r0/r1 cargan igual (`tests/test_agent_compat.py`).
+- `dagger.py` guarda etiquetas geométricas nuevas (`aux_lat/hdg/ang5..40/curve`). **Solo las rondas generadas desde ahora las traen**; r0–r2 las ignoran (NaN enmascarado) y entrenan con speed/is_on_road/energy.
+- Presets para comparar con los mismos datos: `teacher_r2` (base), `teacher_r2_bins`, `teacher_r2_binsaux`. Notebook con lista `PRESETS`.
+- Entrega: `tools/make_final.py <run>` arma `agents/bc_cnn/final/` (versionada, con pesos); `agents/bc_cnn/agent.json` apunta ahí.
+

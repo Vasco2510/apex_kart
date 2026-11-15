@@ -118,14 +118,14 @@ Con ~1.5× tiempo real, RL puro desde píxeles es caro: se decide el día 14.
 | | Paso | Entregable | Depende | Quién |
 |---|---|---|---|---|
 | 🔄 F6.1 | Analizar fallos | Falla en pistas nuevas: errores acumulados → DAgger | F5A.3 | C |
-| ⬜ F6.2 | Una mejora por vez | Más datos, aumento, corrección con datos propios del agente | F6.1 | H+C |
+| 🔄 F6.2 | Una mejora por vez | Código listo: giro por clases, pesos brake/nitro, cabezas auxiliares, aumento. Falta correr `teacher_r2`, `_bins`, `_binsaux` en Colab y comparar | F6.1 | H+C |
 | ⬜ F6.3 | Comparar | Tabla antes/después, mismas semillas | F6.2, F4.4 | C |
 
 ## F7 · Entrega (sin GPU)
 
 | | Paso | Entregable | Depende | Quién |
 |---|---|---|---|---|
-| ⬜ F7.1 | Agente autocontenido | Carpeta con `agent.json`, pesos y pesos portables; usa GPU si hay, si no CPU | F6 | C |
+| 🔄 F7.1 | Agente autocontenido | `tools/make_final.py` genera `agents/bc_cnn/final/` (con pesos, versionada); falta regenerarla con el modelo final | F6 | C |
 | ⬜ F7.2 | Probar en máquina limpia | `play` y `race` desde cero | F7.1 | H |
 | ⬜ F7.3 | Latencia y robustez | Tiempo por acción, pistas nuevas | F7.1 | C |
 | ⬜ F7.4 | Congelar versión | Etiqueta en git + dependencias | F7.2, F7.3 | H+C |

@@ -18,6 +18,10 @@ weights/
 *.ckpt
 *.safetensors
 
+# Excepcion: la carpeta de entrega final lleva sus pesos (tools/make_final.py)
+!agents/bc_cnn/final/
+!agents/bc_cnn/final/*.pt
+
 # Material original del curso (ya descomprimido en el repo)
 MarioCar.zip
 requirements.local.lock.txt

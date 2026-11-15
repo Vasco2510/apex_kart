@@ -1,0 +1,47 @@
+{
+  "descripcion": "Como teacher_r2_bins + cabezas geometricas (desvio lateral, rumbo, angulos a 5/10/20/40 m, curvatura; solo las rondas generadas con dagger.py nuevo las traen, el resto se ignora).",
+  "processed": [
+    "teacher_r0",
+    "teacher_r1",
+    "teacher_r2"
+  ],
+  "run": "bc_teacher_r2_binsaux",
+  "data": "data/teacher_r2_binsaux",
+  "out": "runs/bc_teacher_r2_binsaux",
+  "frames": 3,
+  "epochs": 30,
+  "batch": 256,
+  "lr": 0.001,
+  "workers": 8,
+  "samples_per_epoch": 100000,
+  "val_tracks": [
+    "candela_city",
+    "scotland",
+    "snowtuxpeak"
+  ],
+  "augment": true,
+  "amp": true,
+  "flip": true,
+  "select": "turn",
+  "save_every": 5,
+  "only_finished": true,
+  "aux_heads": [
+    "speed",
+    "is_on_road",
+    "energy",
+    "lat",
+    "hdg",
+    "ang5",
+    "ang10",
+    "ang20",
+    "ang40",
+    "curve"
+  ],
+  "w_aux": 0.5,
+  "steer_loss": "bins",
+  "steer_bins": 21,
+  "pos_weight": true,
+  "aug_color": true,
+  "aug_noise": 0.01,
+  "aug_blur": 0.2
+}

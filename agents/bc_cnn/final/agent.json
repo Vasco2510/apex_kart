@@ -1,0 +1,10 @@
+{
+  "name": "apex_kart_bc_r1",
+  "entry": "agent.py",
+  "class": "Agent",
+  "config": {
+    "checkpoint": "model.pt",
+    "device": "cpu",
+    "threshold": 0.5
+  }
+}

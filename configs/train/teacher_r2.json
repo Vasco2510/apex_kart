@@ -1,0 +1,28 @@
+{
+  "descripcion": "DAgger ronda 2: r0 + r1 + r2 (pistas al reves y estudiante r1). Entrena desde cero con todo.",
+  "processed": [
+    "teacher_r0",
+    "teacher_r1",
+    "teacher_r2"
+  ],
+  "run": "bc_teacher_r2",
+  "data": "data/teacher_r2",
+  "out": "runs/bc_teacher_r2",
+  "frames": 3,
+  "epochs": 30,
+  "batch": 256,
+  "lr": 0.001,
+  "workers": 8,
+  "samples_per_epoch": 100000,
+  "val_tracks": [
+    "candela_city",
+    "scotland",
+    "snowtuxpeak"
+  ],
+  "augment": true,
+  "amp": true,
+  "flip": true,
+  "select": "steer",
+  "save_every": 5,
+  "only_finished": true
+}

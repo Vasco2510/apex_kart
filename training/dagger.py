@@ -28,6 +28,7 @@ sys.path.insert(0, str(ROOT / "agents" / "bc_cnn"))
 
 AUX_KEYS = ("speed", "distance_down_track", "overall_distance", "position", "finished_laps",
             "energy", "is_on_road", "jumping", "has_finished_race")
+GEO_KEYS = ("lat", "hdg", "ang5", "ang10", "ang20", "ang40", "curve")  # etiquetas geometricas privilegiadas (rondas nuevas)
 RACE = ("GO_PHASE", "MUSIC_PHASE", "RACE_PHASE")
 KARTS = ["adiumy", "amanda", "beastie", "emule", "gavroche", "gnu", "hexley", "kiki", "konqi", "nolok", "pidgin",
          "puffy", "sara_the_racer", "sara_the_wizard", "suzanne", "tux", "wilber", "xue"]
@@ -36,6 +37,30 @@ KARTS = ["adiumy", "amanda", "beastie", "emule", "gavroche", "gnu", "hexley", "k
 def shrink(rgb, down):
     h, w, c = rgb.shape
     return rgb.reshape(h // down, down, w // down, down, c).mean(axis=(1, 3)).astype(np.uint8)
+
+
+def geo_labels(teacher, k):
+    """Geometria respecto a la linea central, invariante a la velocidad (solo para cabezas auxiliares del estudiante).
+    lat: desvio lateral / (ancho/2), >0 = a la derecha de la linea; hdg: rumbo del kart - rumbo de la linea (rad, >0 = apunta a +X);
+    angN: angulo hacia el punto de la linea a N m (igual convencion que el giro del profesor); curve: curvatura 5->40 m (rad)."""
+    from teacher import wrap
+    loc = np.asarray(k["location"], np.float64)
+    h = np.asarray(k["front"], np.float64) - loc
+    node = int(k["node"])
+    c0, c1 = teacher.centers[node], teacher.centers[int(teacher.nxt[node])]
+    d = c1 - c0
+    n = max(float(np.hypot(d[0], d[2])), 1e-6)
+    lat = float(((loc[0] - c0[0]) * d[2] - (loc[2] - c0[2]) * d[0]) / n) / max(float(teacher.width[node]) / 2.0, 0.5)
+    head = np.arctan2(h[0], h[2])
+    out = {"lat": float(np.clip(lat, -3, 3)), "hdg": float(wrap(head - np.arctan2(d[0], d[2])))}
+    angs = []
+    for m in (5, 10, 20, 40):
+        tgt, _ = teacher.target(node, float(m))
+        v = tgt - loc
+        angs.append(float(wrap(np.arctan2(v[0], v[2]) - head)))
+        out[f"ang{m}"] = angs[-1]
+    out["curve"] = abs(angs[3] - angs[0])
+    return out
 
 
 def _rollout(job):
@@ -60,7 +85,7 @@ def _rollout(job):
     env = STKPixelEnv(cfg, privileged=True)
     obs, info = env.reset(seed=seed)
     teacher = Teacher(env.base.track)
-    frames, acts, aux, phases = [], [], {k: [] for k in AUX_KEYS}, []
+    frames, acts, aux, phases = [], [], {k: [] for k in AUX_KEYS + GEO_KEYS}, []
     ou, use_teacher, step = 0.0, True, 0
     done, last = False, None
     t0 = time.time()
@@ -86,6 +111,9 @@ def _rollout(job):
                          float(lab["drift"]), float(lab["fire"]), float(lab["rescue"])])
             for key in AUX_KEYS:
                 aux[key].append(float(k.get(key, 0.0)))
+            geo = geo_labels(teacher, k)
+            for key in GEO_KEYS:
+                aux[key].append(geo[key])
             phases.append(phase)
         act = {"steer": np.array([ex["steer"]], np.float32), "acceleration": np.array([float(ex["acceleration"])], np.float32),
                **{n: int(ex[n]) for n in ("brake", "nitro", "drift", "fire", "rescue")}}

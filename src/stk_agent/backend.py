@@ -131,7 +131,8 @@ class PySTKBackend:
         self.provenance = {**self.provenance, "on_screen_names": settings.show_names}
         p = self.p
         assets = self.assets()
-        if settings.track not in assets["tracks"]:
+        extra = [t for t in os.environ.get("STK_EXTRA_TRACKS", "").split(",") if t]  # pistas fuera de la lista oficial (addons)
+        if settings.track not in assets["tracks"] and settings.track not in extra:
             raise ValueError(f"Pista desconocida: {settings.track}; ejecuta assets")
         by_slot = {x.slot: x for x in self.participants}
         config = p.RaceConfig()

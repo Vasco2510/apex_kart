@@ -56,7 +56,7 @@ def _rollout(job):
         student = Agent({"checkpoint": a["student"], "device": "cpu"})
     kart = a["kart"] if a["kart"] != "cycle" else KARTS[(zlib.crc32(name.encode())) % len(KARTS)]
     cfg = RaceSettings(track=track, kart=kart, laps=a["laps"], num_karts=a["num_karts"], seed=seed,
-                       player_slot=0, max_seconds=a["max_seconds"], difficulty=a["difficulty"])
+                       player_slot=0, max_seconds=a["max_seconds"], difficulty=a["difficulty"], reverse=a.get("reverse", False))
     env = STKPixelEnv(cfg, privileged=True)
     obs, info = env.reset(seed=seed)
     teacher = Teacher(env.base.track)
@@ -105,7 +105,7 @@ def _rollout(job):
     result = {"finished": bool(last["has_finished_race"]), "finish_time": float(last["finish_time"]),
               "overall_distance": float(last["overall_distance"]), "native_position": int(last["position"])}
     info_json = {"episode_id": name, "track": track, "kart": kart, "difficulty": a["difficulty"], "laps": a["laps"],
-                 "num_karts": a["num_karts"], "reverse": False, "seed": seed, "human_slot": 0, "group_id": "teacher",
+                 "num_karts": a["num_karts"], "reverse": bool(a.get("reverse", False)), "seed": seed, "human_slot": 0, "group_id": "teacher",
                  "driver_id": a["tag"], "source": "teacher", "student": bool(a["student"]), "beta": a["beta"],
                  "noise": a["noise"], "seconds": step / 30.0, "num_frames": n, "phases": names, "down": a["down"],
                  "stride": a["stride"], "frame_shape": list(frames[0].shape), "result": result}
@@ -138,6 +138,7 @@ def main():
     p.add_argument("--student", help="checkpoint del estudiante (activa DAgger)")
     p.add_argument("--beta", type=float, default=0.3, help="fraccion de tiempo que conduce el profesor en DAgger")
     p.add_argument("--tag", default="t")
+    p.add_argument("--reverse", action="store_true", help="correr las pistas al reves")
     p.add_argument("--kart", default="tux", help="un kart o `cycle` para variar entre los 18 segun la carrera")
     p.add_argument("--upload", help="destino rclone, p. ej. gmail:UTEC/DEEP/apex_kart_processed/teacher_r0")
     p.add_argument("--num-karts", type=int, default=8)

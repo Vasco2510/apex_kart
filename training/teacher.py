@@ -92,11 +92,11 @@ class Teacher:
                 "drift": drift, "fire": False, "rescue": rescue}
 
 
-def run(track, laps, sign, seed, max_seconds, verbose=True, **tk):
+def run(track, laps, sign, seed, max_seconds, verbose=True, reverse=False, **tk):
     from stk_agent.config import RaceSettings
     from stk_agent.gym_env import STKPixelEnv
     cfg = RaceSettings(track=track, kart="tux", laps=laps, num_karts=8, seed=seed, player_slot=0,
-                       max_seconds=max_seconds, difficulty=2)
+                       max_seconds=max_seconds, difficulty=2, reverse=reverse)
     env = STKPixelEnv(cfg, privileged=True)
     obs, info = env.reset(seed=seed)
     teacher = Teacher(env.base.track, steer_sign=sign, **tk)
@@ -128,6 +128,7 @@ if __name__ == "__main__":
     p.add_argument("--sign", type=float, default=1.0)
     p.add_argument("--seed", type=int, default=11)
     p.add_argument("--max-seconds", type=float, default=150.0)
+    p.add_argument("--reverse", action="store_true", help="correr la pista al reves")
     p.add_argument("--drift", action="store_true")
     p.add_argument("--drift-curve", type=float, default=0.4)
     p.add_argument("--drift-speed", type=float, default=12.0)
@@ -139,4 +140,4 @@ if __name__ == "__main__":
     tk = dict(drift=a.drift, drift_curve=a.drift_curve, drift_speed=a.drift_speed, brake_curve=a.brake_curve, brake_speed=a.brake_speed,
               nitro_err=a.nitro_err, nitro_curve=a.nitro_curve)
     for t in a.tracks:
-        run(t, a.laps, a.sign, a.seed, a.max_seconds, **tk)
+        run(t, a.laps, a.sign, a.seed, a.max_seconds, reverse=a.reverse, **tk)

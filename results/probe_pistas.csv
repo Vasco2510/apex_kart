@@ -1,0 +1,16 @@
+pista,reverse,terminada,distancia,error
+cave,False,False,0,RuntimeError: El proceso del motor terminó inesperadamente (exitcode=None)
+oasis,False,False,0,RuntimeError: El proceso del motor terminó inesperadamente (exitcode=None)
+tutorial,False,False,0,RuntimeError: El proceso del motor terminó inesperadamente (exitcode=None)
+temple,False,False,0,RuntimeError: El proceso del motor terminó inesperadamente (exitcode=None)
+overworld,False,False,0,RuntimeError: El proceso del motor terminó inesperadamente (exitcode=None)
+hole_drop,False,False,0,RuntimeError: El proceso del motor terminó inesperadamente (exitcode=None)
+alien_signal,False,False,0,RuntimeError: El proceso del motor terminó inesperadamente (exitcode=None)
+pumpkin_park,False,False,0,RuntimeError: El proceso del motor terminó inesperadamente (exitcode=None)
+lasdunasarena,False,False,0,RuntimeError: El proceso del motor terminó inesperadamente (exitcode=None)
+ancient_colosseum_labyrinth,False,False,0,RuntimeError: El proceso del motor terminó inesperadamente (exitcode=None)
+arena_candela_city,False,False,0,RuntimeError: El proceso del motor terminó inesperadamente (exitcode=None)
+battleisland,False,False,0,RuntimeError: El proceso del motor terminó inesperadamente (exitcode=None)
+lighthouse,True,True,880,
+abyss,True,True,1262,
+candela_city,True,True,1071,

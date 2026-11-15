@@ -33,18 +33,21 @@ def main():
     p.add_argument("--noise", type=float, default=0.3)
     p.add_argument("--workers", type=int, default=3)
     p.add_argument("--skip-tracks", nargs="*", default=[])
+    p.add_argument("--reverse", action="store_true", help="pistas al reves (etiqueta tNr_...; mismos datos de la ronda)")
     a = p.parse_args()
     tracks = [t for t in json.loads((ROOT / "results" / "assets.json").read_text())["tracks"] if t not in a.skip_tracks]
     name = f"teacher_r{a.round}"
     dest = f"{REMOTE}/{name}"
     already = done_remote(dest)
-    tag = f"t{a.round}"
+    tag = f"t{a.round}" + ("r" if a.reverse else "")
     todo_tracks = [t for t in tracks if any(f"{tag}_{t}_s{s}" not in already for s in a.seeds)]
     seeds = a.seeds
     print(f"[{time.strftime('%H:%M:%S')}] {name}: {len(tracks)} pistas x {len(seeds)} semillas; ya subidas: {len(already)}", flush=True)
     cmd = [sys.executable, "-u", str(ROOT / "training" / "dagger.py"), "--out", str(ROOT / "data" / name), "--tracks", *todo_tracks,
            "--seeds", *map(str, seeds), "--laps", str(a.laps), "--noise", str(a.noise), "--kart", "cycle", "--tag", tag,
            "--workers", str(a.workers), "--upload", dest, "--max-seconds", "330"]
+    if a.reverse:
+        cmd.append("--reverse")
     if a.student:
         cmd += ["--student", a.student, "--beta", str(a.beta)]
     subprocess.run(cmd, cwd=ROOT)

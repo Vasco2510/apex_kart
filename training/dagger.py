@@ -51,6 +51,8 @@ def _rollout(job):
     student = None
     if a["student"]:
         from agent import Agent
+        import torch
+        torch.set_num_threads(1)  # varios procesos en paralelo: evitar pelea por los nucleos
         student = Agent({"checkpoint": a["student"], "device": "cpu"})
     kart = a["kart"] if a["kart"] != "cycle" else KARTS[(zlib.crc32(name.encode())) % len(KARTS)]
     cfg = RaceSettings(track=track, kart=kart, laps=a["laps"], num_karts=a["num_karts"], seed=seed,

@@ -43,3 +43,9 @@ Bitácora de lo hecho (más reciente al final) y de lo que solo puede resolver u
 - **Colab CLI** (oficial, `google-colab-cli` 0.7.5): instalada en WSL (`tools/colab.ps1` la llama desde Windows). Login OK; crear/parar sesiones y `exec` funcionan. **`drivemount` no se completa** (error conocido #113 del repo, 3 intentos con consentimiento aceptado) → el entrenamiento sigue por el notebook web. Reintentar si sale una versión que lo arregle.
 - **Pista `mines`**: el motor nativo se cae siempre al cargarla (6/6 carreras fallan). Se excluye de la generación; no está en los datos del profesor.
 - Generación `teacher_r0`: 120 episodios en Drive de 20 pistas (sin `mines`). Colab espera el marcador `_DONE` antes de entrenar.
+
+## 2026-11-15 — Evaluación r0 y DAgger r1
+
+- `bc_teacher_r0` (30 épocas, val 0.35): termina `lighthouse` y `abyss` (vistas); NO termina `candela_city` (459 m), `scotland` (157 m), `snowtuxpeak` (692 m). Puesto 8/8 en todas.
+- Lanzada DAgger r1: `overnight.py --round 1 --student data/student_r0.pt --beta 0.5 --seeds 1 2 3 --noise 0.2 --workers 4 --skip-tracks mines` (PID 30156, `logs/overnight_r1.log`). `dagger.py` limita torch a 1 hilo por proceso.
+- WSL colgado (HCS timeout); no se necesita: la CLI de Colab está descartada (`drivemount` falla).

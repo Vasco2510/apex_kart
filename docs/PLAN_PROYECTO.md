@@ -9,9 +9,21 @@ Plazo: ~30 días desde 2026-10-30, ~2 h/día.
 
 ## Dónde estoy
 
-**Semana 2 · día 10.** Cambio de estrategia: un **profesor** con información privilegiada (geometría de pista) conduce en el simulador, genera datos limpios en las 21 pistas, y el estudiante (solo imagen) los imita; luego DAgger corrige sus errores. El profesor termina las 21 pistas (lento: llega de los últimos contra los bots).
-**En curso (PC, de noche):** `tools/overnight.py` genera 126 carreras y las sube a Drive.
-**Siguiente (H):** Colab con `PRESET='teacher_r0'`. Guía en `docs/COLAB.md`.
+**Semana 3 · día 17 (2026-11-15).** Estudiante `teacher_r0` entrenado y evaluado: **termina las pistas vistas (2/2) y ninguna de las nuevas (0/3)**, puesto 8/8. Ahora corre **DAgger ronda 1** en el PC (60 carreras, ~2 h, sube a Drive).
+**Siguiente (H):** cuando termine DAgger, Colab con `PRESET='teacher_r1'` (GPU). Luego `pull` + `eval`.
+**Saldo Colab:** 167 unidades (un entrenamiento ≈ 2 unidades: no es el límite).
+
+## Rondas (el plan que seguimos)
+
+| Ronda | Datos | Quién conduce al generar | Entrena | Se mide |
+|---|---|---|---|---|
+| r0 ✅ | 120 carreras del profesor + ruido | profesor | `teacher_r0` | 2/2 vistas, 0/3 nuevas |
+| r1 🔄 | +60 carreras, β=0.5 | estudiante r0 la mitad del tiempo, profesor corrige | `teacher_r1` = r0+r1 | pistas nuevas |
+| r2 ⬜ | +60, β=0.3 | estudiante r1 | `teacher_r2` | ídem |
+| r3 ⬜ | +60, β=0.1 | estudiante r2 | modelo final **sin** pistas retenidas para validar | semillas distintas |
+
+Cada ronda = ~2 h PC (de noche) + ~40 min Colab + ~20 min evaluar. Meta: terminar pistas nuevas; después, velocidad vs bots.
+**Límites:** nada nuevo después del día 26 (24-nov); últimos 3 días solo empaquetar (F7). Si tras r2 las pistas nuevas siguen en 0, se cambia de estrategia (más variedad de karts/clima, modelo más grande).
 
 ## Mapa
 
@@ -87,8 +99,8 @@ graph LR
 | | Paso | Entregable | Depende | GPU | Quién |
 |---|---|---|---|---|---|
 | ✅ F5A.1 | Prueba de humo | Entrena y el agente corre | F3.3 | Opc | C |
-| 🔄 F5A.2 | Primer modelo real | Notebook listo: `colab/entrenar.ipynb`; **falta ejecutarlo (H)** | F5A.1, F2.4 | **Sí** | H+C |
-| ⬜ F5A.3 | Medir conduciendo | Tabla del arnés | F5A.2, F4.3 | Opc | C |
+| ✅ F5A.2 | Primer modelo real | `bc_teacher_r0` entrenado en Colab (val 0.35) | F5A.1, F2.4 | **Sí** | H+C |
+| ✅ F5A.3 | Medir conduciendo | `runs/eval_bc_teacher_r0_*`: vistas 2/2, nuevas 0/3 | F5A.2, F4.3 | Opc | C |
 
 ## F5B · Refuerzo
 
@@ -104,7 +116,7 @@ Con ~1.5× tiempo real, RL puro desde píxeles es caro: se decide el día 14.
 
 | | Paso | Entregable | Depende | Quién |
 |---|---|---|---|---|
-| ⬜ F6.1 | Analizar fallos | Dónde falla el mejor agente | F5A.3 | C |
+| 🔄 F6.1 | Analizar fallos | Falla en pistas nuevas: errores acumulados → DAgger | F5A.3 | C |
 | ⬜ F6.2 | Una mejora por vez | Más datos, aumento, corrección con datos propios del agente | F6.1 | H+C |
 | ⬜ F6.3 | Comparar | Tabla antes/después, mismas semillas | F6.2, F4.4 | C |
 

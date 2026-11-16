@@ -35,17 +35,14 @@ if isinstance(PRESETS, str): PRESETS = [PRESETS]
 done = []
 for PRESET in PRESETS:
     cmd = [sys.executable, '-u', 'training/pipeline.py', '--preset', PRESET, '--persist', PERSIST, '--stages', STAGES] + EXTRA.split()
-    print('
-===== ' + PRESET + ' =====
-$', ' '.join(cmd))
+    print('\\n===== ' + PRESET + ' =====\\n$', ' '.join(cmd))
     p = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True, bufsize=1, cwd='/content/repo')
     for line in p.stdout:
         print(line, end='')
     p.wait()
     if p.returncode: raise SystemExit(f'{PRESET}: el pipeline termino con error (codigo {p.returncode}); ya terminados: {done}')
     done.append(PRESET)
-print('
-Terminados:', done, '-> en tu PC: python tools/apex.py pull <run> (la corrida de cada preset esta en su json)')
+print('\\nTerminados:', done, '-> en tu PC: python tools/apex.py pull <run> (la corrida de cada preset esta en su json)')
 drive.flush_and_unmount(); print('Drive sincronizado')"""),
 ]
 
